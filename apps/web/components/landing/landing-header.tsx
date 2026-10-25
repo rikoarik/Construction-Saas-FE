@@ -13,7 +13,7 @@ export function LandingHeader({ onRequestPilot }: LandingHeaderProps) {
   const t = useTranslations("landing.nav");
   const common = useTranslations("common");
   const [open, setOpen] = useState(false);
-  const links = [{ href: "#reality", label: t("reality") }, { href: "#interactive-ledger", label: t("interactive") }, { href: "#capabilities", label: t("capabilities") }, { href: "#integrity", label: t("integrity") }];
+  const links = [{ href: "#reality", label: t("reality") }, { href: "#product-ui", label: t("interactive") }, { href: "#capabilities", label: t("capabilities") }, { href: "#integrity", label: t("integrity") }];
 
   useEffect(() => {
     if (!open) return;

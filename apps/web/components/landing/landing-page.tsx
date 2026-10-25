@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { LandingHeader } from "./landing-header";
 import { HeroSection } from "./hero-section";
 import { RealityComparison } from "./reality-comparison";
+import { ProductShowcase } from "./product-showcase";
 import { InteractiveLedger } from "./interactive-ledger";
 import { CapabilityPillars } from "./capability-pillars";
 import { ArchitectureIntegrity } from "./architecture-integrity";
@@ -37,6 +38,7 @@ export function LandingPage() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection onRequestPilot={handleOpenPilot} />
         <RealityComparison />
+        <ProductShowcase />
         <InteractiveLedger />
         <CapabilityPillars />
         <ArchitectureIntegrity />

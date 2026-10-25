@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Building2, Check, CheckCircle2, LineChart, Route, Send, Smartphone, Table2 } from "lucide-react";
+import { ArrowLeft, Building2, Check, CheckCircle2, ClipboardCheck, LineChart, Route, Send, Smartphone, Table2 } from "lucide-react";
 import { motion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -77,13 +77,16 @@ export function InteractiveLedger() {
               <div className="table-responsive"><table className="ledger-table ledger-table--compact"><thead><tr><th>{t("scurveWeek")}</th><th className="text-right">{t("scurvePlanned")}</th><th className="text-right">{t("scurveActual")}</th><th className="text-right">{t("scurveDeviation")}</th></tr></thead><tbody>{curve.map((point) => <tr key={point.week}><td>{t("weekLabel")} {point.week}</td><td className="text-right">{number.format(point.planned)}%</td><td className="text-right">{number.format(point.actual)}%</td><td className="text-right">{number.format(point.actual - point.planned)} {t("percentagePoints")}</td></tr>)}</tbody></table></div>
             </div>}
             {viewMode === "mobile" && <div className="telegram-sim-wrapper">
-              <div className="phone-device" role="region" aria-label={t("telegramAria")}><div className="phone-speaker" aria-hidden="true" /><div className="phone-screen">
-                <div className="telegram-app-bar"><span>{t("telegramHeader")}</span><span>{t("telegramMode")}</span></div>
-                <div className="telegram-content"><span className="telegram-project">{projectType === "building" ? t("buildingProject") : t("infrastructureProject")}</span><h3>{t("mobileHeadline")}</h3>
-                  <dl><div><dt>{t("itemDescription")}</dt><dd>{items[2].description}</dd></div><div><dt>{t("mobileMeasuredQty")}</dt><dd>{projectType === "building" ? "19.04 m³" : "340.00 m³"}</dd></div><div><dt>{t("mobileEvidence")}</dt><dd>{t("evidenceAttached")}</dd></div></dl>
-                  {submitted ? <div className="telegram-success" role="status"><CheckCircle2 size={16} aria-hidden="true" />{t("mobileSubmit")}</div> : <button type="button" className="button button--primary" onClick={() => setSubmitted(true)}><Send size={14} aria-hidden="true" />{t("telegramSubmit")}</button>}
+              <div className="phone-device" role="region" aria-label={t("telegramAria")}>
+                <div className="phone-device__buttons" aria-hidden="true"><i /><i /><i /></div>
+                <div className="phone-device__screen"><div className="phone-status"><span>09:41</span><div className="phone-dynamic-island" aria-hidden="true" /><div className="phone-status__icons" aria-hidden="true"><i /><i /><i /></div></div>
+                  <div className="telegram-app-bar"><button type="button" aria-label={t("telegramBack")}><ArrowLeft size={16} aria-hidden="true" /></button><div><strong>{t("telegramHeader")}</strong><span>{t("telegramOnline")}</span></div><span className="telegram-app-bar__avatar"><ClipboardCheck size={14} aria-hidden="true" /></span></div>
+                  <div className="telegram-content"><div className="telegram-project"><span>{t("assignedProject")}</span><strong>{projectType === "building" ? t("buildingProject") : t("infrastructureProject")}</strong></div><div className="telegram-form-heading"><span>{t("mobileHeadline")}</span><small>{t("draftSaved")}</small></div>
+                    <dl><div><dt>{t("itemDescription")}</dt><dd>{items[2].description}</dd></div><div><dt>{t("mobileMeasuredQty")}</dt><dd className="telegram-quantity">{projectType === "building" ? "19.04" : "340.00"}<span>{items[2].unit}</span></dd></div><div><dt>{t("mobileEvidence")}</dt><dd className="telegram-evidence"><span className="telegram-evidence__thumb"><Check size={15} aria-hidden="true" /></span><span>{t("evidenceAttached")}<small>{t("evidenceMeta")}</small></span></dd></div></dl>
+                    {submitted ? <div className="telegram-success" role="status"><CheckCircle2 size={16} aria-hidden="true" />{t("mobileSubmit")}</div> : <button type="button" className="button button--primary" onClick={() => setSubmitted(true)}><Send size={14} aria-hidden="true" />{t("telegramSubmit")}</button>}
+                  </div><div className="phone-home-indicator" aria-hidden="true" />
                 </div>
-              </div></div>
+              </div>
               <div className="telegram-explainer"><span className="eyebrow">{t("fieldEyebrow")}</span><h3>{t("telegramCalloutTitle")}</h3><p>{t("telegramCalloutDesc")}</p><ul>{[1, 2, 3].map((item) => <li key={item}><Check size={15} aria-hidden="true" />{t(`telegramPoint${item}`)}</li>)}</ul></div>
             </div>}
           </div>

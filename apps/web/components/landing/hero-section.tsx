@@ -1,7 +1,8 @@
 "use client";
 
 import { ArrowDown, ArrowRight, Check, MapPin } from "lucide-react";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useTranslations } from "next-intl";
 
 interface HeroSectionProps {
@@ -13,13 +14,21 @@ const plannedPoints = "34,230 105,211 176,188 247,156 318,132 389,105 460,69";
 
 export function HeroSection({ onRequestPilot }: HeroSectionProps) {
   const t = useTranslations("landing.hero");
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 26, mass: .35, skipInitialAnimation: true });
+  const productY = useTransform(progress, [0, 1], [0, 90]);
+  const copyY = useTransform(progress, [0, 1], [0, 34]);
+  const productScale = useTransform(progress, [0, 1], [1, .96]);
 
   return (
-    <section className="landing-hero" aria-labelledby="hero-heading">
+    <section ref={sectionRef} className="landing-hero" aria-labelledby="hero-heading">
       <div className="landing-hero__rule" aria-hidden="true" />
       <div className="landing-container landing-hero__layout">
         <motion.div
           className="landing-hero__copy"
+          style={reduceMotion ? undefined : { y: copyY }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -37,7 +46,7 @@ export function HeroSection({ onRequestPilot }: HeroSectionProps) {
               <span>{t("ctaSecondary")}</span>
               <span className="button__icon" aria-hidden="true"><ArrowRight size={16} /></span>
             </button>
-            <a href="#interactive-ledger" className="landing-hero__demo-link">
+            <a href="#product-ui" className="landing-hero__demo-link">
               <span>{t("ctaPrimary")}</span>
               <ArrowDown size={16} aria-hidden="true" />
             </a>
@@ -50,6 +59,7 @@ export function HeroSection({ onRequestPilot }: HeroSectionProps) {
 
         <motion.div
           className="hero-product"
+          style={reduceMotion ? undefined : { y: productY, scale: productScale }}
           initial={{ opacity: 0, x: 28 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
