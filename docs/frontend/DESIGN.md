@@ -335,6 +335,8 @@ Danger controls retain their validated color pair on hover/pressed, with underli
 
 ### 3.3 Component rules
 
+**Custom product components are mandatory.** Do not use prebuilt visual UI components, page templates, or ready-made design systems (for example, shadcn/ui, MUI, Chakra, Ant Design, Bootstrap, or copied component kits). Build and own the product's buttons, inputs, dialogs, menus, tables, navigation, and other visual components in this repository; compose them from semantic platform primitives (`button`, `input`, `select`, `dialog`, table elements, links, and landmarks) and the tokens/rules in this document. Native semantic HTML is required and is not considered a prebuilt UI component. Non-visual utilities and hooks may be used when they do not impose a visual system; Lucide React remains the approved icon source. Apply this rule to web and Telegram Mini App UI, existing screens as they are changed, and all newly added screens.
+
 - **Button:** one dominant primary CTA per task area. Primary uses olive; red is reserved for danger/error. Destructive action uses a danger treatment and contextual confirmation.
 - **Input:** real label above; visible required indicators; field-specific error below; do not use placeholder as label.
 - **Tabs:** for parallel views; **stepper** for a sequential import or publish workflow. Permission-filter each view and handle lost permission without revealing data. Route navigation uses links, not tab roles (§1.3).
@@ -962,9 +964,9 @@ Prefer composable, boring components over abstractions that only save 3 lines. C
 
 1. Read this document and the feature's PRD/task/acceptance criteria.
 2. Check corresponding API types, permissions, status machine, and calculations. Do not make up response objects to fill the mockup.
-3. Inventory existing components, token usage, i18n namespaces, SVG assets, and screenshots before adding new abstractions.
+3. Inventory existing project-owned components, token usage, i18n namespaces, SVG assets, and screenshots before adding new abstractions; reuse or extend project-owned components rather than introducing a prebuilt visual component library.
 4. Draw/inspect a low-fidelity wireframe for changes that alter layout or user flow.
-5. Check whether the proposed component is redundant with an existing table, list, or primitive.
+5. Check whether the proposed component is redundant with an existing project-owned table, list, or primitive.
 
 ### While implementing
 
@@ -1019,6 +1021,7 @@ Before a frontend PR is accepted, the reviewer must answer **yes** to each:
 - [ ] All user-facing UI strings and accessible names use i18n, with English and Indonesian catalogs.
 - [ ] Buttons and navigation are human-readable; no hype, emoji, fake actions, or vague CTAs.
 - [ ] Icons are functional/consistent and original SVG assets are used sparingly for empty states.
+- [ ] Product UI is built from project-owned visual components; no third-party visual component kit or prebuilt page template is present. Semantic HTML primitives are styled with repository-owned design tokens.
 - [ ] No filler card, decorative gradient, oversized hero, or unjustified illustration.
 - [ ] Data values are accurately scoped to tenant/project/period/budget version and approved status.
 - [ ] RAB/schedule/report tables are readable with keyboard, sticky structure, and sensible density.
@@ -1054,6 +1057,7 @@ New modules (inventory, actual expenses, subscription billing, client portals, o
 - **English-first UI**, translated through `next-intl`, with Indonesian support; **zero hardcoded visible JSX copy**.
 - **Light, dark, system** themes from initial implementation, using the **Basalt / Olive** token system.
 - **No emojis**; **Lucide icons** for controls; **original theme-aware SVGs** for intentional empty states.
+- **Custom product-owned UI components only**; no prebuilt visual component libraries or page templates. Semantic HTML elements are the accessible foundation and must use repository-owned styles/tokens.
 - **No AI slop**: no template gradients, repetitive giant cards, stock characters, vague CTA text, or filler paragraphs.
 - **Data-first tables** for RAB/WBS, schedule, reports, approvals and exports.
 - **Short, human, task-based English labels**; native locale formatting; no misleading calculations.
