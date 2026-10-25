@@ -1,170 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleControl } from "@/components/theme/locale-control";
 import { ThemeControl } from "@/components/theme/theme-provider";
 
-interface LandingHeaderProps {
-  onRequestPilot: () => void;
-}
+interface LandingHeaderProps { onRequestPilot: () => void; }
 
 export function LandingHeader({ onRequestPilot }: LandingHeaderProps) {
   const t = useTranslations("landing.nav");
   const common = useTranslations("common");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const links = [{ href: "#reality", label: t("reality") }, { href: "#interactive-ledger", label: t("interactive") }, { href: "#capabilities", label: t("capabilities") }, { href: "#integrity", label: t("integrity") }];
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
+  useEffect(() => {
+    if (!open) return;
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
 
   return (
     <header className="landing-header">
       <div className="landing-container landing-header__inner">
-        <Link href="/" className="landing-brand" onClick={closeMobileMenu}>
-          <span className="brand__mark" aria-hidden="true">
-            {common("brandMark")}
-          </span>
-          <span className="landing-brand__text">{common("brand")}</span>
+        <Link href="/" className="landing-brand" onClick={() => setOpen(false)} aria-label={common("brand")}>
+          <span className="landing-brand__symbol" aria-hidden="true"><i /><i /><i /></span>
+          <span>{common("brand")}</span>
         </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="landing-nav" aria-label="Main Navigation">
-          <ul className="landing-nav__list">
-            <li>
-              <a href="#reality" className="landing-nav__link">
-                {t("reality")}
-              </a>
-            </li>
-            <li>
-              <a href="#interactive-ledger" className="landing-nav__link">
-                {t("interactive")}
-              </a>
-            </li>
-            <li>
-              <a href="#capabilities" className="landing-nav__link">
-                {t("capabilities")}
-              </a>
-            </li>
-            <li>
-              <a href="#integrity" className="landing-nav__link">
-                {t("integrity")}
-              </a>
-            </li>
-            <li>
-              <a href="#pilot" className="landing-nav__link">
-                {t("pilot")}
-              </a>
-            </li>
-            <li>
-              <a href="#faq" className="landing-nav__link">
-                {t("faq")}
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Actions & Controls */}
+        <nav className="landing-nav" aria-label={common("mainNavigation")}><ul>{links.map((link) => <li key={link.href}><a href={link.href}>{link.label}</a></li>)}</ul></nav>
         <div className="landing-header__controls">
-          <LocaleControl />
-          <ThemeControl />
-
-          <button
-            type="button"
-            className="button button--secondary landing-header__cta-pilot"
-            onClick={onRequestPilot}
-          >
-            {t("requestPilot")}
-          </button>
-
-          <Link
-            href="/app"
-            className="button button--primary landing-header__cta-app"
-          >
-            <span>{t("openApp")}</span>
-            <ArrowUpRight size={15} aria-hidden="true" />
-          </Link>
-
-          {/* Mobile hamburger button */}
-          <button
-            type="button"
-            className="landing-header__hamburger"
-            aria-expanded={mobileMenuOpen}
-            aria-label={mobileMenuOpen ? common("closeNavigation") : common("openNavigation")}
-            onClick={toggleMobileMenu}
-          >
-            {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-          </button>
+          <div className="landing-header__preferences"><LocaleControl /><ThemeControl /></div>
+          <button type="button" className="button button--primary landing-header__cta" onClick={onRequestPilot}>{t("requestPilot")}<ArrowUpRight size={15} aria-hidden="true" /></button>
+          <button type="button" className="landing-header__menu" aria-expanded={open} aria-controls="landing-mobile-menu" aria-label={open ? common("closeNavigation") : common("openNavigation")} onClick={() => setOpen(!open)}>{open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}</button>
         </div>
       </div>
-
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="landing-header__mobile-drawer">
-          <div className="landing-container">
-            <nav aria-label="Mobile Navigation">
-              <ul className="mobile-nav__list">
-                <li>
-                  <a href="#reality" onClick={closeMobileMenu}>
-                    {t("reality")}
-                  </a>
-                </li>
-                <li>
-                  <a href="#interactive-ledger" onClick={closeMobileMenu}>
-                    {t("interactive")}
-                  </a>
-                </li>
-                <li>
-                  <a href="#capabilities" onClick={closeMobileMenu}>
-                    {t("capabilities")}
-                  </a>
-                </li>
-                <li>
-                  <a href="#integrity" onClick={closeMobileMenu}>
-                    {t("integrity")}
-                  </a>
-                </li>
-                <li>
-                  <a href="#pilot" onClick={closeMobileMenu}>
-                    {t("pilot")}
-                  </a>
-                </li>
-                <li>
-                  <a href="#faq" onClick={closeMobileMenu}>
-                    {t("faq")}
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div className="mobile-drawer__actions">
-              <button
-                type="button"
-                className="button button--secondary"
-                onClick={() => {
-                  closeMobileMenu();
-                  onRequestPilot();
-                }}
-              >
-                {t("requestPilot")}
-              </button>
-              <Link
-                href="/app"
-                className="button button--primary"
-                onClick={closeMobileMenu}
-              >
-                <span>{t("openApp")}</span>
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {open && <div id="landing-mobile-menu" className="landing-header__mobile">
+        <nav className="landing-container" aria-label={common("mobileNavigation")}>
+          {links.map((link, index) => <a key={link.href} href={link.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{link.label}<ArrowUpRight size={17} aria-hidden="true" /></a>)}
+          <a href="#pilot" onClick={() => setOpen(false)}><span>05</span>{t("pilot")}<ArrowUpRight size={17} aria-hidden="true" /></a>
+          <a href="#faq" onClick={() => setOpen(false)}><span>06</span>{t("faq")}<ArrowUpRight size={17} aria-hidden="true" /></a>
+          <div className="landing-header__mobile-controls"><LocaleControl /><ThemeControl /></div>
+          <button type="button" className="button button--primary" onClick={() => { setOpen(false); onRequestPilot(); }}>{t("requestPilot")}</button>
+        </nav>
+      </div>}
     </header>
   );
 }

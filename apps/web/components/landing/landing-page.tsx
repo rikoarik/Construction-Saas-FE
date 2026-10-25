@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { LandingHeader } from "./landing-header";
 import { HeroSection } from "./hero-section";
 import { RealityComparison } from "./reality-comparison";
@@ -13,6 +14,7 @@ import { LandingFooter } from "./landing-footer";
 import { PilotDialog } from "./pilot-dialog";
 
 export function LandingPage() {
+  const common = useTranslations("common");
   const [pilotDialogOpen, setPilotDialogOpen] = useState(false);
 
   const handleOpenPilot = () => {
@@ -27,7 +29,7 @@ export function LandingPage() {
     <div className="landing-layout">
       {/* Skip to main content for accessibility */}
       <a href="#main-content" className="skip-link">
-        Skip to main content
+        {common("skipToContent")}
       </a>
 
       <LandingHeader onRequestPilot={handleOpenPilot} />

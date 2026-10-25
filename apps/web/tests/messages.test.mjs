@@ -1,43 +1,72 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { checkSourceText } from "../scripts/check-hardcoded-ui-copy.mjs";
 
-const messagesDirectory = new URL("../messages/", import.meta.url);
+const catalogs = Object.fromEntries(
+  await Promise.all(
+    ["en", "id"].map(async (locale) => [
+      locale,
+      JSON.parse(
+        await readFile(new URL(`../messages/${locale}.json`, import.meta.url), "utf8"),
+      ),
+    ]),
+  ),
+);
 
-function flattenKeys(value, prefix = "", keys = new Set()) {
+function flatten(value, prefix = "", entries = new Map()) {
   for (const [key, child] of Object.entries(value)) {
     const path = prefix ? `${prefix}.${key}` : key;
     if (child !== null && typeof child === "object" && !Array.isArray(child)) {
-      flattenKeys(child, path, keys);
+      flatten(child, path, entries);
     } else {
-      keys.add(path);
+      entries.set(path, child);
     }
   }
-  return keys;
+  return entries;
 }
 
-test("English and Indonesian message catalogs have the same keys", async () => {
-  const [english, indonesian] = await Promise.all([
-    readFile(new URL("en.json", messagesDirectory), "utf8").then(JSON.parse),
-    readFile(new URL("id.json", messagesDirectory), "utf8").then(JSON.parse),
-  ]);
-  const englishKeys = flattenKeys(english);
-  const indonesianKeys = flattenKeys(indonesian);
+function hasLocalizedValue(enValue, idValue) {
+  if (typeof enValue !== "string" || typeof idValue !== "string") return true;
+  return enValue.trim() !== idValue.trim();
+}
 
-  assert.deepEqual([...indonesianKeys].sort(), [...englishKeys].sort());
+test("English and Indonesian message catalogs have the same keys", () => {
+  assert.deepEqual(
+    [...flatten(catalogs.en).keys()].sort(),
+    [...flatten(catalogs.id).keys()].sort(),
+  );
 });
 
-test("message catalogs have localized common, home, and landing namespaces", async () => {
-  for (const locale of ["en", "id"]) {
-    const messages = JSON.parse(
-      await readFile(new URL(`${locale}.json`, messagesDirectory), "utf8"),
-    );
+test("localized catalogs have corresponding user-facing values", () => {
+  const enEntries = flatten(catalogs.en);
+  const idEntries = flatten(catalogs.id);
+  const untranslated = [...enEntries].filter(([key, value]) =>
+    !hasLocalizedValue(value, idEntries.get(key)),
+  );
 
-    assert.ok(messages.common);
-    assert.ok(messages.home);
-    assert.ok(messages.landing);
-    assert.ok(Object.keys(messages.common).length > 0);
-    assert.ok(Object.keys(messages.home).length > 0);
-    assert.ok(Object.keys(messages.landing).length > 0);
-  }
+  assert.deepEqual(untranslated, []);
+});
+
+test("visible and accessible JSX copy is sourced from translations", () => {
+  const violations = checkSourceText([
+    {
+      file: "good.tsx",
+      source: `export function Good({ t }) { return <><h1>{t("title")}</h1><img alt={t("alt")} /><a aria-label={t("link")} /></>; }`,
+    },
+    {
+      file: "bad.tsx",
+      source: `export function Bad() { return <><h1>Hardcoded title</h1><button aria-label="Close">Close</button><input placeholder="Search" /></>; }`,
+    },
+  ]);
+
+  assert.deepEqual(
+    violations.map(({ file, kind, value }) => [file, kind, value]),
+    [
+      ["bad.tsx", "text", "Hardcoded title"],
+      ["bad.tsx", "aria-label", "Close"],
+      ["bad.tsx", "text", "Close"],
+      ["bad.tsx", "placeholder", "Search"],
+    ],
+  );
 });
