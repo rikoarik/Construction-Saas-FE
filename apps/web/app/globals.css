@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./landing.css";
 
 @layer reset, base, theme, components, utilities;
 
@@ -33,7 +34,7 @@
     --positive-bg: #e7f3ec;
     --warning-bg: #fff2db;
     --negative-bg: #fbeaec;
-    --paper: #ffffff;
+    --on-negative: #ffffff;
     --ink: #202622;
     --chart-planned: var(--text-muted);
     --chart-actual: var(--primary);
@@ -51,6 +52,7 @@
     --radius-panel: 8px;
     --radius-dialog: 10px;
     --shadow-overlay: 0 8px 28px rgb(30 38 31 / 10%);
+    --scrim: rgb(20 25 20 / 45%);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -79,12 +81,13 @@
       --positive-bg: #1d392f;
       --warning-bg: #3d321f;
       --negative-bg: #42282d;
-      --paper: #ffffff;
+      --on-negative: #202719;
       --ink: #202622;
       --chart-planned: var(--text-muted);
       --chart-actual: var(--primary);
       --chart-grid: var(--border);
       --shadow-overlay: 0 12px 34px rgb(0 0 0 / 28%);
+      --scrim: rgb(0 0 0 / 55%);
     }
   }
 
@@ -113,12 +116,13 @@
     --positive-bg: #1d392f;
     --warning-bg: #3d321f;
     --negative-bg: #42282d;
-    --paper: #ffffff;
+    --on-negative: #202719;
     --ink: #202622;
     --chart-planned: var(--text-muted);
     --chart-actual: var(--primary);
     --chart-grid: var(--border);
     --shadow-overlay: 0 12px 34px rgb(0 0 0 / 28%);
+    --scrim: rgb(0 0 0 / 55%);
   }
 }
 
@@ -381,6 +385,43 @@
     padding: 11px 3px 0;
   }
 
+  .account-menu {
+    position: relative;
+  }
+
+  .account-menu > summary {
+    list-style: none;
+  }
+
+  .account-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .account-menu__popover {
+    position: absolute;
+    z-index: 8;
+    inset-inline-end: 0;
+    inset-block-end: calc(100% + 8px);
+    display: none;
+    min-inline-size: 204px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-panel);
+    background: var(--surface);
+    padding: 12px;
+    box-shadow: var(--shadow-overlay);
+  }
+
+  .account-menu[open] .account-menu__popover {
+    display: grid;
+    gap: 8px;
+  }
+
+  .account-menu__label {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
   .avatar {
     display: grid;
     flex: 0 0 auto;
@@ -481,6 +522,10 @@
     block-size: 23px;
     margin-inline: 1px;
     background: var(--border);
+  }
+
+  .topbar__actions > .theme-control {
+    display: none;
   }
 
   .avatar--top {
@@ -769,7 +814,7 @@
     inset: 0;
     display: block;
     border: 0;
-    background: rgb(20 25 20 / 45%);
+    background: var(--scrim);
   }
 
   .topbar {
@@ -910,12 +955,38 @@
   :root,
   :root[data-theme="dark"] {
     color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-raised: #fafaf6;
+    --surface-hover: #eef0e8;
+    --text: #252922;
+    --text-muted: #5b6255;
+    --border: #d6dacf;
+    --control-border: #727b68;
+    --primary: #52612f;
+    --on-primary: #ffffff;
+    --focus: #52612f;
+    --positive: #176b50;
+    --warning: #89520a;
+    --negative: #ac3445;
+    --primary-hover: #445126;
+    --primary-active: #37421f;
+    --selection-bg: #e8edd9;
+    --disabled-bg: #eef0e8;
+    --disabled-text: #5b6255;
+    --on-negative: #ffffff;
+    --positive-bg: #e7f3ec;
+    --warning-bg: #fff2db;
+    --negative-bg: #fbeaec;
+    --chart-planned: var(--text-muted);
+    --chart-actual: var(--primary);
+    --chart-grid: var(--border);
   }
 
   body,
   .app-shell {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg);
+    color: var(--text);
   }
 
   .sidebar,

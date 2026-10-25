@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import Script from "next/script";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -44,6 +45,18 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`try {
+            var saved = localStorage.getItem("construction-saas-theme");
+            var dark = saved === "dark" || (saved !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+            document.documentElement.dataset.theme = dark ? "dark" : "light";
+            document.documentElement.style.colorScheme = dark ? "dark" : "light";
+          } catch (_) {
+            var systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+            document.documentElement.dataset.theme = systemDark ? "dark" : "light";
+            document.documentElement.style.colorScheme = systemDark ? "dark" : "light";
+          }`}
+        </Script>
       </body>
     </html>
   );

@@ -101,33 +101,33 @@ export function ThemeControl() {
   return (
     <fieldset className="theme-control" aria-label={t("theme")}>
       <legend className="sr-only">{t("theme")}</legend>
-      <button
-        aria-label={t("light")}
-        aria-pressed={preference.preference === "light"}
-        className="theme-control__button"
-        onClick={() => updateTheme("light")}
-        type="button"
-      >
-        <Sun aria-hidden="true" size={16} />
-      </button>
-      <button
-        aria-label={t("dark")}
-        aria-pressed={preference.preference === "dark"}
-        className="theme-control__button"
-        onClick={() => updateTheme("dark")}
-        type="button"
-      >
-        <Moon aria-hidden="true" size={16} />
-      </button>
-      <button
-        aria-label={t("system")}
-        aria-pressed={preference.preference === "system"}
-        className="theme-control__button"
-        onClick={() => updateTheme("system")}
-        type="button"
-      >
-        <Laptop aria-hidden="true" size={16} />
-      </button>
-    </fieldset>
-  );
+        <button
+          aria-label={t("light")}
+          aria-pressed={preference.preference === "light"}
+          className="theme-control__button"
+          onClick={() => updateTheme("light")}
+          type="button"
+        >
+          <Sun aria-hidden="true" size={16} />
+        </button>
+        <button
+          aria-label={t("dark")}
+          aria-pressed={preference.preference === "dark"}
+          className="theme-control__button"
+          onClick={() => updateTheme("dark")}
+          type="button"
+        >
+          <Moon aria-hidden="true" size={16} />
+        </button>
+        <button
+          aria-label={t("system")}
+          aria-pressed={preference.preference === "system"}
+          className="theme-control__button"
+          onClick={() => updateTheme("system")}
+          type="button"
+        >
+          <Laptop aria-hidden="true" size={16} />
+        </button>
+      </fieldset>
+    );
 }

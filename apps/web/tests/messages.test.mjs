@@ -27,7 +27,7 @@ test("English and Indonesian message catalogs have the same keys", async () => {
   assert.deepEqual([...indonesianKeys].sort(), [...englishKeys].sort());
 });
 
-test("message catalogs have localized common and home namespaces", async () => {
+test("message catalogs have localized common, home, and landing namespaces", async () => {
   for (const locale of ["en", "id"]) {
     const messages = JSON.parse(
       await readFile(new URL(`${locale}.json`, messagesDirectory), "utf8"),
@@ -35,7 +35,9 @@ test("message catalogs have localized common and home namespaces", async () => {
 
     assert.ok(messages.common);
     assert.ok(messages.home);
+    assert.ok(messages.landing);
     assert.ok(Object.keys(messages.common).length > 0);
     assert.ok(Object.keys(messages.home).length > 0);
+    assert.ok(Object.keys(messages.landing).length > 0);
   }
 });

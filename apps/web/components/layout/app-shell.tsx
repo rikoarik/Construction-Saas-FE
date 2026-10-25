@@ -81,9 +81,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="sidebar-user__name">{accountName}</span>
               <span className="sidebar-user__role">{common("profile")}</span>
             </span>
-            <button aria-label={common("menu")} className="icon-button" type="button">
-              <ChevronDown aria-hidden="true" size={16} />
-            </button>
+            <details className="account-menu">
+              <summary aria-label={common("menu")} className="icon-button">
+                <ChevronDown aria-hidden="true" size={16} />
+              </summary>
+              <div className="account-menu__popover">
+                <span className="account-menu__label">{common("appearance")}</span>
+                <ThemeControl />
+              </div>
+            </details>
           </div>
         </div>
       </aside>
