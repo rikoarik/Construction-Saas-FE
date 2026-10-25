@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working in this repository.
 
+## Repository identity: Frontend
+
+This `CLAUDE.md` is specifically for the **Construction-Saas-FE frontend repository**. It applies to the web frontend and Telegram Mini App UI only—not the Go backend or Telegram Bot/webhook implementation, which belong to a separate repository.
+
 ## Repository status and scope
 
 This checkout is currently a **documentation-only frontend repository**. It has no application source, package manifest, build configuration, or test suite. Consequently, build, lint, run, and single-test commands are not available yet. Do not infer commands from the proposed stack; when implementation and manifests are added, use their scripts and document the supported single-test invocation.
