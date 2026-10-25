@@ -1,8 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ArrowRight, ClipboardList, FolderKanban } from "lucide-react";
+import { ArrowRight, ClipboardList } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { EmptyState } from "@/components/illustrations/empty-state";
+import { ProjectEmptyIllustration } from "@/components/illustrations/project-empty-illustration";
 
 export function HomePage() {
   const t = useTranslations("home");
@@ -39,17 +41,17 @@ export function HomePage() {
             <ArrowRight aria-hidden="true" size={15} />
           </Link>
         </div>
-        <div className="empty-state">
-          <span aria-hidden="true" className="empty-state__icon">
-            <FolderKanban size={21} strokeWidth={1.7} />
-          </span>
-          <h3>{t("emptyTitle")}</h3>
-          <p>{t("emptyDescription")}</p>
-          <Link className="button button--secondary" href="/projects">
-            {t("primaryAction")}
-            <ArrowRight aria-hidden="true" size={15} />
-          </Link>
-        </div>
+        <EmptyState
+          action={(
+            <Link className="button button--secondary" href="/projects">
+              {t("primaryAction")}
+              <ArrowRight aria-hidden="true" size={15} />
+            </Link>
+          )}
+          description={t("emptyDescription")}
+          illustration={<ProjectEmptyIllustration className="project-empty-illustration" />}
+          title={t("emptyTitle")}
+        />
       </section>
 
       <footer className="overview-footer">

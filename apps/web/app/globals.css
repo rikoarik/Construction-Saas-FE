@@ -736,15 +736,17 @@
     text-align: center;
   }
 
-  .empty-state__icon {
+  .empty-state__illustration {
     display: grid;
     place-items: center;
-    inline-size: 42px;
-    block-size: 42px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface-raised);
+    inline-size: min(100%, 220px);
     color: var(--text-muted);
+  }
+
+  .project-empty-illustration {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
   }
 
   .empty-state h3 {
@@ -758,6 +760,11 @@
     margin: 5px 0 16px;
     color: var(--text-muted);
     font-size: 12px;
+  }
+
+  .empty-state__action {
+    display: flex;
+    justify-content: center;
   }
 
   .overview-footer {
@@ -936,6 +943,10 @@
   .empty-state {
     min-block-size: 224px;
     padding: 23px 16px;
+  }
+
+  .empty-state__illustration {
+    inline-size: min(100%, 176px);
   }
 
   .empty-state .button {
