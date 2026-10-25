@@ -40,14 +40,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Link>
 
         <div className="workspace-label">{common("workspace")}</div>
-        <div aria-label={common("company")} className="company-switcher">
-          <span aria-hidden="true" className="company-switcher__mark">{companyName.slice(0, 1)}</span>
-          <span className="company-switcher__copy">
-            <span className="company-switcher__label">{common("company")}</span>
-            <span className="company-switcher__name">{companyName}</span>
-          </span>
-          <ChevronDown aria-hidden="true" size={15} />
-        </div>
+          <div className="company-switcher">
+            <button aria-label={common("companyPlaceholder")} className="switcher-button" type="button">
+              <span aria-hidden="true" className="company-switcher__mark">{companyName.slice(0, 1)}</span>
+              <span className="company-switcher__copy">
+                <span className="company-switcher__label">{common("company")}</span>
+                <span className="company-switcher__name">{companyName}</span>
+              </span>
+              <ChevronDown aria-hidden="true" size={15} />
+            </button>
+          </div>
 
         <div className="nav-label">{common("navigation")}</div>
         <nav aria-label={common("navigation")} className="primary-nav">
@@ -68,12 +70,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <div className="sidebar__bottom">
           <div className="workspace-card">
-            <span aria-hidden="true" className="workspace-card__mark">{projectName.slice(0, 1)}</span>
-            <span className="workspace-card__copy">
-              <span className="workspace-card__name">{projectName}</span>
-              <span className="workspace-card__role">{common("project")}</span>
-            </span>
-            <ChevronDown aria-hidden="true" size={15} />
+            <button aria-label={common("projectPlaceholder")} className="switcher-button" type="button">
+              <span aria-hidden="true" className="workspace-card__mark">{projectName.slice(0, 1)}</span>
+              <span className="workspace-card__copy">
+                <span className="workspace-card__name">{projectName}</span>
+                <span className="workspace-card__role">{common("project")}</span>
+              </span>
+              <ChevronDown aria-hidden="true" size={15} />
+            </button>
           </div>
           <div className="sidebar-user">
             <span aria-hidden="true" className="avatar">{accountName.slice(0, 1)}</span>
@@ -81,9 +85,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="sidebar-user__name">{accountName}</span>
               <span className="sidebar-user__role">{common("profile")}</span>
             </span>
-            <button aria-label={common("menu")} className="icon-button" type="button">
-              <ChevronDown aria-hidden="true" size={16} />
-            </button>
+            <details className="account-menu">
+              <summary aria-label={common("openAppearanceSettings")} className="icon-button">
+                <ChevronDown aria-hidden="true" size={16} />
+              </summary>
+              <div className="account-menu__popover">
+                <span className="account-menu__label">{common("appearance")}</span>
+                <ThemeControl />
+              </div>
+            </details>
           </div>
         </div>
       </aside>

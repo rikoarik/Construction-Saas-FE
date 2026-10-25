@@ -51,6 +51,7 @@
     --radius-panel: 8px;
     --radius-dialog: 10px;
     --shadow-overlay: 0 8px 28px rgb(30 38 31 / 10%);
+    --scrim: rgb(20 25 20 / 45%);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -85,6 +86,7 @@
       --chart-actual: var(--primary);
       --chart-grid: var(--border);
       --shadow-overlay: 0 12px 34px rgb(0 0 0 / 28%);
+      --scrim: rgb(0 0 0 / 55%);
     }
   }
 
@@ -273,11 +275,34 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-control);
     background: var(--surface);
-    padding: 7px 9px;
+    padding: 0;
   }
 
-  .company-switcher > svg,
-  .workspace-card > svg {
+  .switcher-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    inline-size: 100%;
+    min-block-size: 44px;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    padding: 7px 9px;
+    color: var(--text);
+    text-align: start;
+  }
+
+  .switcher-button > svg {
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+    color: var(--text-muted);
+  }
+
+  .switcher-button:hover {
+    background: var(--surface-hover);
+  }
+
+  .switcher-button > svg {
     flex: 0 0 auto;
     margin-inline-start: auto;
     color: var(--text-muted);
@@ -379,6 +404,47 @@
     min-block-size: 48px;
     border-block-start: 1px solid var(--border);
     padding: 11px 3px 0;
+  }
+
+  .account-menu {
+    position: relative;
+  }
+
+  .account-menu > summary {
+    list-style: none;
+  }
+
+  .account-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .account-menu__popover {
+    position: absolute;
+    z-index: 8;
+    inset-inline-end: 0;
+    inset-block-end: calc(100% + 8px);
+    display: none;
+    min-inline-size: 204px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-panel);
+    background: var(--surface);
+    padding: 12px;
+    box-shadow: var(--shadow-overlay);
+  }
+
+  .account-menu[open] .account-menu__popover {
+    display: grid;
+    gap: 8px;
+  }
+
+  .sidebar-user .account-menu__popover .theme-control {
+    display: flex;
+  }
+
+  .account-menu__label {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
   }
 
   .avatar {
@@ -483,6 +549,10 @@
     background: var(--border);
   }
 
+  .topbar__actions > .theme-control {
+    display: none;
+  }
+
   .avatar--top {
     inline-size: 29px;
     block-size: 29px;
@@ -500,8 +570,8 @@
   .theme-control__button {
     display: grid;
     place-items: center;
-    inline-size: 28px;
-    block-size: 28px;
+    inline-size: 44px;
+    min-block-size: 44px;
     border: 0;
     border-radius: 4px;
     background: transparent;
@@ -815,8 +885,8 @@
   }
 
   .theme-control__button {
-    inline-size: 25px;
-    block-size: 27px;
+    inline-size: 44px;
+    min-block-size: 44px;
   }
 
   .main-content {
@@ -883,7 +953,7 @@
   }
 
   .theme-control__button {
-    inline-size: 23px;
+    inline-size: 44px;
   }
 
   .locale-control select {

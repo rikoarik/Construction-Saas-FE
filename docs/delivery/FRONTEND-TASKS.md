@@ -10,6 +10,17 @@ Frontend work may begin against contract-ready OpenAPI mocks without waiting for
 |---|---|---|---|
 | FE-001 | Next.js app scaffold, lint/test/build | — | CI passes |
 | FE-002 | semantic design tokens light/dark/system | FE-001 | visual checks both themes |
+
+### FE-002 visual verification record
+
+- **Checked:** 2026-10-25 against the production build served from `apps/web`.
+- **Desktop light/dark:** 1440×1000 screenshots reviewed; light surfaces (`#F7F7F2`) and dark surfaces (`#171A15`) were legible, controls and labels remained distinguishable.
+- **Mobile light/dark:** 390×844 screenshots reviewed; shell and main actions fit the viewport, with 16px content gutters and no visible horizontal overflow.
+- **Theme interactions:** selected Dark and Light, confirmed `data-theme`, computed body background, `aria-pressed`, localStorage and the `construction-saas-theme` cookie update; reloaded and confirmed the selected theme persisted. Switched to System and emulated both OS color schemes, confirming System followed each change and remained the selected option.
+- **Initial paint:** production HTML SSR used the saved theme cookie for the ThemeProvider snapshot; theme CSS values were present before hydration. The provider keeps the server and hydration snapshots consistent.
+- **Print and reduced motion:** print styles restore the full light semantic palette; reduced-motion CSS disables transitions/animations.
+- **Not yet satisfied:** the control is still only in the top bar (DESIGN requires user menu and Appearance settings); touch hit area is below the documented 44 px minimum; unavailable destination routes/interactive company switching remain blocked by later tasks.
+
 | FE-003 | next-intl English/Indonesian foundation | FE-001 | no hardcoded UI-copy lint/check |
 | FE-004 | icon/asset conventions + SVG empty-state framework | FE-002 | asset review |
 | FE-005 | accessible primitives: buttons/forms/dialogs/table chrome | FE-002,FE-003 | component/a11y tests |

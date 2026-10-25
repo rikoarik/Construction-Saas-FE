@@ -35,13 +35,12 @@ const [rootLayout, localeLayout] = await Promise.all([
   readFile(localeLayoutPath, "utf8"),
 ]);
 const rootMetadata = findExportedMetadata(rootLayout, rootLayoutPath);
+const rootHasDynamicLocaleDocument = /params:\s*Promise<\{\s*locale:\s*string\s*\}>/.test(rootLayout);
 const localizedMetadata = /export\s+async\s+function\s+generateMetadata\s*\(/.test(localeLayout);
 const violations = [];
 
-if (rootMetadata && !localizedMetadata) {
-  violations.push(
-    "app/layout.tsx exports static metadata while the locale layout has no generateMetadata function",
-  );
+if (rootMetadata && !rootHasDynamicLocaleDocument && !localizedMetadata) {
+  violations.push("A static root document defines metadata without locale-aware overrides");
 }
 
 if (violations.length) {

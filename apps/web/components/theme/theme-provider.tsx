@@ -12,9 +12,12 @@ type ThemeSnapshot = {
 };
 
 const THEME_STORAGE_KEY = "construction-saas-theme";
+const THEME_COOKIE_KEY = "construction-saas-theme";
 const SERVER_THEME: ThemeSnapshot = { preference: "system", resolved: "light" };
-let currentTheme = SERVER_THEME;
+let serverTheme = SERVER_THEME;
+
 const listeners = new Set<() => void>();
+let currentTheme = SERVER_THEME;
 let systemTheme: "light" | "dark" = "light";
 let mediaQuery: MediaQueryList | undefined;
 
@@ -24,8 +27,8 @@ function isThemePreference(value: string | null): value is ThemePreference {
 
 function readSavedPreference(): ThemePreference {
   try {
-    const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-    return isThemePreference(saved) ? saved : "system";
+    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return isThemePreference(stored) ? stored : "system";
   } catch {
     return "system";
   }
@@ -43,6 +46,14 @@ function applyTheme(theme: ThemeSnapshot) {
   document.documentElement.style.colorScheme = theme.resolved;
 }
 
+function setThemeCookie(preference: ThemePreference) {
+  try {
+    document.cookie = `${THEME_COOKIE_KEY}=${preference}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  } catch {
+    // Cookie persistence is optional; current page state still changes.
+  }
+}
+
 function initializeTheme() {
   if (typeof window === "undefined" || mediaQuery) return;
 
@@ -50,12 +61,18 @@ function initializeTheme() {
   systemTheme = mediaQuery.matches ? "dark" : "light";
   currentTheme = resolveTheme(readSavedPreference());
   applyTheme(currentTheme);
+  const syncPreference = (preference: ThemePreference) => {
+    currentTheme = resolveTheme(preference);
+    applyTheme(currentTheme);
+    listeners.forEach((listener) => listener());
+  };
   mediaQuery.addEventListener("change", (event) => {
     systemTheme = event.matches ? "dark" : "light";
-    if (currentTheme.preference === "system") {
-      currentTheme = resolveTheme("system");
-      applyTheme(currentTheme);
-      listeners.forEach((listener) => listener());
+    if (currentTheme.preference === "system") syncPreference("system");
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key === THEME_STORAGE_KEY || event.key === null) {
+      syncPreference(readSavedPreference());
     }
   });
 }
@@ -72,7 +89,7 @@ function getSnapshot() {
 }
 
 function getServerSnapshot() {
-  return SERVER_THEME;
+  return serverTheme;
 }
 
 function updateTheme(preference: ThemePreference) {
@@ -82,11 +99,16 @@ function updateTheme(preference: ThemePreference) {
   try {
     window.localStorage.setItem(THEME_STORAGE_KEY, preference);
   } catch {
-    // The current page still reflects the selected theme.
+    // Local storage can be unavailable; the current document still reflects the preference.
   }
+  setThemeCookie(preference);
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children, initialTheme = "system" }: { children: React.ReactNode; initialTheme?: ThemePreference }) {
+  const serverResolved = initialTheme === "system" ? "light" : initialTheme;
+  serverTheme = { preference: initialTheme, resolved: serverResolved };
+  if (typeof window === "undefined") currentTheme = serverTheme;
+  else if (!mediaQuery) currentTheme = serverTheme;
   return children;
 }
 
