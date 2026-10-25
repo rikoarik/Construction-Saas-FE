@@ -50,6 +50,8 @@
     "status": "Status",
     "emptyTitle": "Proyek akan tampil di sini",
     "emptyDescription": "Daftar ini menampilkan proyek yang tersedia untuk akun Anda.",
-    "scopeLabel": "Ringkasan ruang kerja"
+    "scopeLabel": "Ringkasan ruang kerja",
+    "unavailableTitle": "Ruang kerja proyek belum tersedia",
+    "unavailableDescription": "Login dan akses proyek belum terhubung. Data perusahaan atau proyek belum ditampilkan."
   }
 }

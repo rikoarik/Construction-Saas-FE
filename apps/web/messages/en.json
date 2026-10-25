@@ -50,6 +50,8 @@
     "status": "Status",
     "emptyTitle": "Projects will appear here",
     "emptyDescription": "Projects available to your account will be listed here.",
-    "scopeLabel": "Workspace overview"
+    "scopeLabel": "Workspace overview",
+    "unavailableTitle": "Project workspace unavailable",
+    "unavailableDescription": "Sign-in and project access are not connected yet. No company or project data is shown."
   }
 }

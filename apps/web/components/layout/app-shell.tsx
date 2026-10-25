@@ -1,144 +1,119 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, BriefcaseBusiness, ChevronDown, Menu, Search } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { ArrowLeft, BriefcaseBusiness, Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleControl } from "@/components/theme/locale-control";
 import { ThemeControl } from "@/components/theme/theme-provider";
 
-const navItems = [
-  { href: "/", key: "overview" as const, icon: BriefcaseBusiness },
-  { href: "/projects", key: "projects" as const },
-  { href: "/reports", key: "reports" as const },
-  { href: "/documents", key: "documents" as const },
-  { href: "/people", key: "people" as const },
-  { href: "/templates", key: "templates" as const },
-  { href: "/settings", key: "settings" as const },
-];
+/** Presentation only. The session/route owner must supply authorized destinations after verifying scope. */
+export type ShellDestination = { href: string; label: string };
+export type ShellScope =
+  | { kind: "company"; name: string; destinations: ShellDestination[] }
+  | { kind: "project"; name: string; companyName: string; destinations: ShellDestination[]; projectsHref?: string };
 
-export function AppShell({ children }: { children: React.ReactNode }) {
-  const common = useTranslations("common");
-  const home = useTranslations("home");
+type AppShellProps = { children: React.ReactNode; scope?: ShellScope };
+
+export function AppShell({ children, scope }: AppShellProps) {
+  const t = useTranslations("common");
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const companyName = common("companyPlaceholder");
-  const projectName = common("projectPlaceholder");
-  const accountName = common("profilePlaceholder");
+  const drawerId = useId();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const drawer = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (mobileOpen) drawer.current?.focus();
+  }, [mobileOpen]);
+
+  const closeDrawer = () => setMobileOpen(false);
+  const destinations = scope?.destinations ?? [{ href: "/", label: t("overview") }];
 
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">
-        {common("skipToContent")}
-      </a>
-
-      <aside className={`sidebar${mobileOpen ? " sidebar--open" : ""}`}>
-        <Link className="brand" href="/" onClick={() => setMobileOpen(false)}>
-          <span aria-hidden="true" className="brand__mark">{common("brandMark")}</span>
-          <span>{common("brand")}</span>
-          <ChevronDown aria-hidden="true" className="brand__chevron" size={15} />
+      <a className="skip-link" href="#main-content">{t("skipToContent")}</a>
+      <aside
+        aria-label={t("navigation")}
+        className={`sidebar${mobileOpen ? " sidebar--open" : ""}`}
+        id={drawerId}
+        ref={drawer}
+        tabIndex={-1}
+      >
+        <Link className="brand" href="/" onClick={closeDrawer}>
+          <span aria-hidden="true" className="brand__mark">{t("brandMark")}</span>
+          <span>{t("brand")}</span>
         </Link>
-
-        <div className="workspace-label">{common("workspace")}</div>
-          <div className="company-switcher">
-            <button aria-label={common("companyPlaceholder")} className="switcher-button" type="button">
-              <span aria-hidden="true" className="company-switcher__mark">{companyName.slice(0, 1)}</span>
-              <span className="company-switcher__copy">
-                <span className="company-switcher__label">{common("company")}</span>
-                <span className="company-switcher__name">{companyName}</span>
-              </span>
-              <ChevronDown aria-hidden="true" size={15} />
-            </button>
+        {scope && (
+          <div className="shell-scope">
+            <span className="shell-scope__label">{t(scope.kind)}</span>
+            <strong className="shell-scope__name" title={scope.name}>{scope.name}</strong>
+            {scope.kind === "project" && (
+              <span className="shell-scope__parent" title={scope.companyName}>{scope.companyName}</span>
+            )}
           </div>
-
-        <div className="nav-label">{common("navigation")}</div>
-        <nav aria-label={common("navigation")} className="primary-nav">
-          {navItems.map(({ href, key, icon: Icon }) => (
+        )}
+        <nav aria-label={t("navigation")} className="primary-nav">
+          {scope?.kind === "project" && scope.projectsHref && (
+            <Link className="nav-link nav-link--back" href={scope.projectsHref} onClick={closeDrawer}>
+              <ArrowLeft aria-hidden="true" size={18} strokeWidth={1.8} />
+              <span>{t("backToProjects")}</span>
+            </Link>
+          )}
+          {destinations.map(({ href, label }) => (
             <Link
               aria-current={pathname === href ? "page" : undefined}
               className={`nav-link${pathname === href ? " nav-link--active" : ""}`}
               href={href}
-              key={key}
-              onClick={() => setMobileOpen(false)}
+              key={href}
+              onClick={closeDrawer}
             >
-              {Icon ? <Icon aria-hidden="true" size={17} strokeWidth={1.8} /> : <span className="nav-link__marker" aria-hidden="true" />}
-              <span>{common(key)}</span>
-              {key === "reports" && <span className="nav-link__count">—</span>}
+              <BriefcaseBusiness aria-hidden="true" size={18} strokeWidth={1.8} />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
-
-        <div className="sidebar__bottom">
-          <div className="workspace-card">
-            <button aria-label={common("projectPlaceholder")} className="switcher-button" type="button">
-              <span aria-hidden="true" className="workspace-card__mark">{projectName.slice(0, 1)}</span>
-              <span className="workspace-card__copy">
-                <span className="workspace-card__name">{projectName}</span>
-                <span className="workspace-card__role">{common("project")}</span>
-              </span>
-              <ChevronDown aria-hidden="true" size={15} />
-            </button>
-          </div>
-          <div className="sidebar-user">
-            <span aria-hidden="true" className="avatar">{accountName.slice(0, 1)}</span>
-            <span className="sidebar-user__copy">
-              <span className="sidebar-user__name">{accountName}</span>
-              <span className="sidebar-user__role">{common("profile")}</span>
-            </span>
-            <details className="account-menu">
-              <summary aria-label={common("openAppearanceSettings")} className="icon-button">
-                <ChevronDown aria-hidden="true" size={16} />
-              </summary>
-              <div className="account-menu__popover">
-                <span className="account-menu__label">{common("appearance")}</span>
-                <ThemeControl />
-              </div>
-            </details>
-          </div>
+        <div className="sidebar__preferences">
+          <span>{t("appearance")}</span>
+          <ThemeControl />
         </div>
       </aside>
 
-      {mobileOpen && (
-        <button
-          aria-label={common("closeNavigation")}
-          className="mobile-scrim"
-          onClick={() => setMobileOpen(false)}
-          type="button"
-        />
-      )}
+      {mobileOpen && <button aria-label={t("closeNavigation")} className="mobile-scrim" onClick={() => { closeDrawer(); menuButton.current?.focus(); }} type="button" />}
 
       <div className="workspace">
         <header className="topbar">
           <button
-            aria-label={common(mobileOpen ? "closeNavigation" : "openNavigation")}
+            aria-controls={drawerId}
+            aria-expanded={mobileOpen}
+            aria-label={t(mobileOpen ? "closeNavigation" : "openNavigation")}
             className="icon-button mobile-menu-button"
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={() => setMobileOpen((open) => !open)}
+            ref={menuButton}
             type="button"
           >
-            <Menu aria-hidden="true" size={19} />
+            {mobileOpen ? <X aria-hidden="true" size={20} /> : <Menu aria-hidden="true" size={20} />}
           </button>
-          <div className="breadcrumb">
-            <span>{common("company")}</span>
-            <span className="breadcrumb__separator">/</span>
-            <span className="breadcrumb__current">{home("scopeLabel")}</span>
+          <div className="breadcrumb" title={scope?.name ?? t("brand")}>
+            {scope?.name ?? t("brand")}
           </div>
           <div className="topbar__actions">
-            <button aria-label={common("search")} className="icon-button search-button" type="button">
-              <Search aria-hidden="true" size={17} />
-              <span>{common("search")}</span>
-              <kbd>⌘ K</kbd>
-            </button>
             <LocaleControl />
-            <ThemeControl />
-            <span className="topbar__divider" />
-            <button aria-label={common("menu")} className="icon-button notification-button" type="button">
-              <Bell aria-hidden="true" size={17} />
-              <span className="notification-indicator" />
-            </button>
-            <span aria-hidden="true" className="avatar avatar--top">{accountName.slice(0, 1)}</span>
           </div>
         </header>
-        <main className="main-content" id="main-content">{children}</main>
+        <main className="main-content" id="main-content" tabIndex={-1}>{children}</main>
       </div>
     </div>
   );

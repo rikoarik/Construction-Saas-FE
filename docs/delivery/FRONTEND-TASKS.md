@@ -1,6 +1,6 @@
 # Frontend Task Backlog — Full Product
 
-**Owner:** frontend lane · **Status:** planned unless repository evidence says otherwise
+**Owner:** frontend lane · **Status:** F0 FE-001–FE-006 verified by repository evidence below; later tasks remain planned or blocked by dependencies
 
 Frontend work may begin against contract-ready OpenAPI mocks without waiting for backend implementation. UI must follow `docs/frontend/DESIGN.md`, `docs/frontend/FRONTEND.md`, and for Telegram UI `docs/frontend/TELEGRAM-MINI-APP.md`. Telegram Bot API/webhook work is not a frontend task and lives in the backend repository as `docs/delivery/BOT-TASKS.md` in the backend repository.
 
@@ -13,7 +13,7 @@ Frontend work may begin against contract-ready OpenAPI mocks without waiting for
 | FE-003 | next-intl English/Indonesian foundation | FE-001 | no hardcoded UI-copy lint/check | **verified** — pushed commits `fe38e93`, `c95da2d`; locale catalogs/parity and hardcoded-copy checks present |
 | FE-004 | icon/asset conventions + SVG empty-state framework | FE-002 | asset review | **verified** — `apps/web/components/illustrations/README.md` documents Lucide/SVG and empty-state conventions; owned projects SVG and inline theme-aware component reviewed against DESIGN §5; reusable composition is demonstrated on the localized home empty state; SVG/markup tests and app quality checks pass (2026-10-25) |
 | FE-005 | accessible primitives: buttons/forms/dialogs/table chrome | FE-002,FE-003 | component/a11y tests | **verified** — button busy/disabled semantics, associated field labels/hints/errors, native modal Escape handling, and keyboard-scrollable semantic table region covered by `apps/web/tests/primitives.test.tsx` (4 passing component tests); typecheck, lint, message parity, UI-copy check, and production build pass |
-| FE-006 | project/company application shell | FE-005 | responsive shell tests | blocked — prerequisite FE-005 not verified |
+| FE-006 | project/company application shell | FE-005 | responsive shell tests | **verified (code/test scope)** — `apps/web/components/layout/app-shell.tsx` renders one real home destination without session data, accepts explicit scope/destinations from a future authorized route owner, and does not impersonate company/project switching; `apps/web/tests/app-shell.test.tsx` covers scope change, safe links, localization, drawer Escape/focus. CSS uses persistent 224 px desktop sidebar and narrow-screen drawer; production browser checks at 320/390/1440 px showed no horizontal overflow. Test/lint/typecheck/message/UI-copy/metadata/build pass. Full auth/capability binding and eight-combination screenshot review remain pending FE-007/010/011/013/114. |
 | FE-007 | generated OpenAPI client + mock server | FE-001 | contract fixture tests | planned — acceptance evidence not yet recorded |
 | FE-008 | error/capability handling layer | FE-003,FE-007 | error-code UI tests | blocked — prerequisite FE-007 not verified |
 
