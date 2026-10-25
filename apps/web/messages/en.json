@@ -1,6 +1,7 @@
 {
   "common": {
     "brand": "Construction SaaS",
+    "workspaceDescription": "Construction project delivery workspace.",
     "brandMark": "C",
     "overviewTitle": "Overview",
     "companyPlaceholder": "Select a company",

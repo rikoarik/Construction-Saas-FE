@@ -18,6 +18,8 @@ npm run test
 npm run lint
 npm run typecheck
 npm run check:messages
+npm run check:ui-copy
+npm run check:metadata
 npm run build
 ```
 

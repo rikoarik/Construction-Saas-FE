@@ -1,6 +1,7 @@
 {
   "common": {
     "brand": "Construction SaaS",
+    "workspaceDescription": "Ruang kerja pengelolaan proyek konstruksi.",
     "brandMark": "C",
     "overviewTitle": "Ringkasan",
     "companyPlaceholder": "Pilih perusahaan",

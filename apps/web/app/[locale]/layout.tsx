@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
@@ -27,6 +27,17 @@ type LocaleLayoutProps = {
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: LocaleLayoutProps) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  const t = await getTranslations({ locale, namespace: "common" });
+
+  return {
+    title: t("brand"),
+    description: t("workspaceDescription"),
+  };
 }
 
 export default async function LocaleLayout({
