@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle2, X } from "lucide-react";
+import { Check, CheckCircle2, ChevronDown, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PilotDialogProps {
@@ -14,6 +14,7 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [projectTypeOpen, setProjectTypeOpen] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
     contactName: "",
@@ -131,15 +132,49 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
 
             <div className="form-group">
               <label htmlFor="project-type">{t("projectTypeLabel")}</label>
-              <select
-                id="project-type"
-                value={formData.projectType}
-                onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-              >
-                <option value="building">{t("projectTypeBuilding")}</option>
-                <option value="infra">{t("projectTypeInfra")}</option>
-                <option value="industrial">{t("projectTypeIndustrial")}</option>
-              </select>
+              <input type="hidden" name="projectType" value={formData.projectType} />
+              <div className="pilot-select">
+                <button
+                  id="project-type"
+                  type="button"
+                  className="pilot-select__trigger"
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-expanded={projectTypeOpen}
+                  aria-controls="project-type-options"
+                  onClick={() => setProjectTypeOpen((open) => !open)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") setProjectTypeOpen(false);
+                    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setProjectTypeOpen(true);
+                    }
+                  }}
+                >
+                  <span>{t(`projectType${formData.projectType[0].toUpperCase()}${formData.projectType.slice(1)}`)}</span>
+                  <ChevronDown size={17} aria-hidden="true" />
+                </button>
+                {projectTypeOpen && (
+                  <div id="project-type-options" className="pilot-select__options" role="listbox" aria-labelledby="project-type">
+                    {(["building", "infra", "industrial"] as const).map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        className="pilot-select__option"
+                        role="option"
+                        aria-selected={formData.projectType === value}
+                        onClick={() => {
+                          setFormData({ ...formData, projectType: value });
+                          setProjectTypeOpen(false);
+                        }}
+                      >
+                        <span>{t(`projectType${value[0].toUpperCase()}${value.slice(1)}`)}</span>
+                        {formData.projectType === value && <Check size={16} aria-hidden="true" />}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="pilot-dialog__actions">

@@ -41,8 +41,9 @@ test("English and Indonesian message catalogs have the same keys", () => {
 test("localized catalogs have corresponding user-facing values", () => {
   const enEntries = flatten(catalogs.en);
   const idEntries = flatten(catalogs.id);
+  const localeInvariantKeys = new Set(["common.brand", "common.brandMark"]);
   const untranslated = [...enEntries].filter(([key, value]) =>
-    !hasLocalizedValue(value, idEntries.get(key)),
+    !localeInvariantKeys.has(key) && !hasLocalizedValue(value, idEntries.get(key)),
   );
 
   assert.deepEqual(untranslated, []);
