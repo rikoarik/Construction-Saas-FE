@@ -13,8 +13,10 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
   const t = useTranslations("landing.dialog");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [projectTypeOpen, setProjectTypeOpen] = useState(false);
+  const [activeOption, setActiveOption] = useState(0);
+  const selectRef = useRef<HTMLButtonElement>(null);
+  const projectTypes = ["building", "infra", "industrial"] as const;
   const [formData, setFormData] = useState({
     companyName: "",
     contactName: "",
@@ -39,17 +41,14 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
 
   const handleClose = () => {
     setSubmitted(false);
+    setProjectTypeOpen(false);
     onClose();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate real brief network request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-    }, 600);
+    // This is explicitly a local demonstration, not a network submission.
+    setSubmitted(true);
   };
 
   return (
@@ -133,8 +132,11 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
             <div className="form-group">
               <label htmlFor="project-type">{t("projectTypeLabel")}</label>
               <input type="hidden" name="projectType" value={formData.projectType} />
-              <div className="pilot-select">
+              <div className="pilot-select" onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setProjectTypeOpen(false);
+              }}>
                 <button
+                  ref={selectRef}
                   id="project-type"
                   type="button"
                   className="pilot-select__trigger"
@@ -142,12 +144,27 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
                   aria-haspopup="listbox"
                   aria-expanded={projectTypeOpen}
                   aria-controls="project-type-options"
-                  onClick={() => setProjectTypeOpen((open) => !open)}
+                  aria-activedescendant={projectTypeOpen ? `project-type-${projectTypes[activeOption]}` : undefined}
+                  onClick={() => {
+                    setActiveOption(projectTypes.indexOf(formData.projectType as typeof projectTypes[number]));
+                    setProjectTypeOpen((open) => !open);
+                  }}
                   onKeyDown={(event) => {
-                    if (event.key === "Escape") setProjectTypeOpen(false);
-                    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+                    if (event.key === "Escape" && projectTypeOpen) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      setProjectTypeOpen(false);
+                    }
+                    if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
                       event.preventDefault();
                       setProjectTypeOpen(true);
+                      const direction = event.key === "ArrowDown" ? 1 : -1;
+                      setActiveOption(event.key === "Home" ? 0 : event.key === "End" ? 2 : projectTypeOpen ? (activeOption + direction + 3) % 3 : projectTypes.indexOf(formData.projectType as typeof projectTypes[number]));
+                    }
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      if (projectTypeOpen) setFormData({ ...formData, projectType: projectTypes[activeOption] });
+                      setProjectTypeOpen(!projectTypeOpen);
                     }
                   }}
                 >
@@ -156,16 +173,19 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
                 </button>
                 {projectTypeOpen && (
                   <div id="project-type-options" className="pilot-select__options" role="listbox" aria-labelledby="project-type">
-                    {(["building", "infra", "industrial"] as const).map((value) => (
+                    {projectTypes.map((value, index) => (
                       <button
+                        id={`project-type-${value}`}
                         key={value}
                         type="button"
-                        className="pilot-select__option"
+                        className={`pilot-select__option${activeOption === index ? " is-active" : ""}`}
                         role="option"
+                        tabIndex={-1}
                         aria-selected={formData.projectType === value}
                         onClick={() => {
                           setFormData({ ...formData, projectType: value });
                           setProjectTypeOpen(false);
+                          selectRef.current?.focus();
                         }}
                       >
                         <span>{t(`projectType${value[0].toUpperCase()}${value.slice(1)}`)}</span>
@@ -188,9 +208,8 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
               <button
                 type="submit"
                 className="button button--primary"
-                disabled={isSubmitting}
               >
-                {isSubmitting ? t("submitting") : t("submitButton")}
+                {t("submitButton")}
               </button>
             </div>
           </form>

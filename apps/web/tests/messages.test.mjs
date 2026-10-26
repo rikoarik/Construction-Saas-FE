@@ -41,7 +41,21 @@ test("English and Indonesian message catalogs have the same keys", () => {
 test("localized catalogs have corresponding user-facing values", () => {
   const enEntries = flatten(catalogs.en);
   const idEntries = flatten(catalogs.id);
-  const localeInvariantKeys = new Set(["common.brand", "common.brandMark"]);
+  // Proper names, shared loanwords, identifiers, and integer quantities do not
+  // change between locales. Keep this explicit so untranslated prose still fails.
+  const localeInvariantKeys = new Set([
+    "common.brand", "common.brandMark", "landing.nav.pilot",
+    "landing.hero.reportLocation", "landing.hero.reportCode",
+    "landing.explorer.status", "landing.explorer.telegram",
+    "landing.explorer.buildingQuantity4",
+    ...[1, 2, 3].map((i) => `landing.explorer.report${i}Code`),
+    ...["road", "building"].flatMap((project) =>
+      [1, 2, 3, 4].flatMap((i) => [
+        `landing.explorer.${project}Code${i}`,
+        `landing.explorer.${project}Progress${i}`,
+      ]),
+    ),
+  ]);
   const untranslated = [...enEntries].filter(([key, value]) =>
     !localeInvariantKeys.has(key) && !hasLocalizedValue(value, idEntries.get(key)),
   );

@@ -5,10 +5,7 @@ import { useTranslations } from "next-intl";
 import { LandingHeader } from "./landing-header";
 import { HeroSection } from "./hero-section";
 import { RealityComparison } from "./reality-comparison";
-import { ReportJourney } from "./report-journey";
 import { ProductShowcase } from "./product-showcase";
-import { InteractiveLedger } from "./interactive-ledger";
-import { CapabilityPillars } from "./capability-pillars";
 import { ArchitectureIntegrity } from "./architecture-integrity";
 import { PilotSection } from "./pilot-section";
 import { FaqSection } from "./faq-section";
@@ -19,38 +16,20 @@ export function LandingPage() {
   const common = useTranslations("common");
   const [pilotDialogOpen, setPilotDialogOpen] = useState(false);
 
-  const handleOpenPilot = () => {
-    setPilotDialogOpen(true);
-  };
-
-  const handleClosePilot = () => {
-    setPilotDialogOpen(false);
-  };
-
   return (
     <div className="landing-layout">
-      {/* Skip to main content for accessibility */}
-      <a href="#main-content" className="skip-link">
-        {common("skipToContent")}
-      </a>
-
-      <LandingHeader onRequestPilot={handleOpenPilot} />
-
+      <a href="#main-content" className="skip-link">{common("skipToContent")}</a>
+      <LandingHeader onRequestPilot={() => setPilotDialogOpen(true)} />
       <main id="main-content" tabIndex={-1}>
-        <HeroSection onRequestPilot={handleOpenPilot} />
+        <HeroSection onRequestPilot={() => setPilotDialogOpen(true)} />
         <RealityComparison />
-        <ReportJourney />
         <ProductShowcase />
-        <InteractiveLedger />
-        <CapabilityPillars />
         <ArchitectureIntegrity />
-        <PilotSection onRequestPilot={handleOpenPilot} />
         <FaqSection />
+        <PilotSection onRequestPilot={() => setPilotDialogOpen(true)} />
       </main>
-
       <LandingFooter />
-
-      <PilotDialog isOpen={pilotDialogOpen} onClose={handleClosePilot} />
+      <PilotDialog isOpen={pilotDialogOpen} onClose={() => setPilotDialogOpen(false)} />
     </div>
   );
 }

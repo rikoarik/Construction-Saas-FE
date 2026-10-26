@@ -13,7 +13,13 @@ export function LandingHeader({ onRequestPilot }: LandingHeaderProps) {
   const t = useTranslations("landing.nav");
   const common = useTranslations("common");
   const [open, setOpen] = useState(false);
-  const links = [{ href: "#reality", label: t("reality") }, { href: "#product-ui", label: t("interactive") }, { href: "#capabilities", label: t("capabilities") }, { href: "#integrity", label: t("integrity") }];
+  const links = [
+    { href: "#reality", label: t("reality") },
+    { href: "#product-ui", label: t("interactive") },
+    { href: "#integrity", label: t("integrity") },
+    { href: "#faq", label: t("faq") },
+    { href: "#pilot", label: t("pilot") },
+  ];
 
   useEffect(() => {
     if (!open) return;
@@ -39,8 +45,6 @@ export function LandingHeader({ onRequestPilot }: LandingHeaderProps) {
       {open && <div id="landing-mobile-menu" className="landing-header__mobile">
         <nav className="landing-container" aria-label={common("mobileNavigation")}>
           {links.map((link, index) => <a key={link.href} href={link.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{link.label}<ArrowUpRight size={17} aria-hidden="true" /></a>)}
-          <a href="#pilot" onClick={() => setOpen(false)}><span>05</span>{t("pilot")}<ArrowUpRight size={17} aria-hidden="true" /></a>
-          <a href="#faq" onClick={() => setOpen(false)}><span>06</span>{t("faq")}<ArrowUpRight size={17} aria-hidden="true" /></a>
           <div className="landing-header__mobile-controls"><LocaleControl /><ThemeControl /></div>
           <button type="button" className="button button--primary" onClick={() => { setOpen(false); onRequestPilot(); }}>{t("requestPilot")}</button>
         </nav>
