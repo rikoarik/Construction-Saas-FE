@@ -18,9 +18,9 @@ export function HeroSection({ onRequestPilot }: HeroSectionProps) {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 26, mass: .35, skipInitialAnimation: true });
-  const productY = useTransform(progress, [0, 1], [0, 90]);
-  const copyY = useTransform(progress, [0, 1], [0, 34]);
-  const productScale = useTransform(progress, [0, 1], [1, .96]);
+  const productY = useTransform(progress, [0, 1], [0, 24]);
+  const copyY = useTransform(progress, [0, 1], [0, 12]);
+  const productScale = useTransform(progress, [0, 1], [1, .985]);
 
   return (
     <section ref={sectionRef} className="landing-hero" aria-labelledby="hero-heading">
@@ -66,6 +66,7 @@ export function HeroSection({ onRequestPilot }: HeroSectionProps) {
         >
           <div className="hero-product__index" aria-hidden="true">01 / 04</div>
           <div className="hero-product__window">
+            <div className="hero-product__systembar"><span>{t("footLabel")}</span><span><i aria-hidden="true" />{t("reportApproved")}</span></div>
             <header className="hero-product__header">
               <div>
                 <span className="hero-product__overline">{t("previewLabel")}</span>

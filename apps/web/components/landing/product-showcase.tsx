@@ -21,17 +21,15 @@ export function ProductShowcase() {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: .4, skipInitialAnimation: true });
-  const frameY = useTransform(progress, [0, 1], [70, -45]);
-  const frameRotate = useTransform(progress, [0, .5, 1], [2.5, 0, -1.5]);
-  const fieldY = useTransform(progress, [0, 1], [90, -100]);
-  const approvalY = useTransform(progress, [0, 1], [-45, 70]);
+  const frameY = useTransform(progress, [0, 1], [18, -10]);
+  const fieldY = useTransform(progress, [0, 1], [16, -16]);
+  const approvalY = useTransform(progress, [0, 1], [-12, 18]);
 
   useGSAP(() => {
     if (reduceMotion || !stageRef.current) return;
     const media = gsap.matchMedia();
     media.add("(min-width: 861px)", () => {
-      gsap.fromTo(stageRef.current, { scale: .94 }, { scale: 1, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top 85%", end: "center 45%", scrub: .7 } });
-      gsap.to(".product-showcase__gridline", { yPercent: -18, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "bottom top", scrub: 1 } });
+      gsap.fromTo(stageRef.current, { scale: .985 }, { scale: 1, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top 85%", end: "center 55%", scrub: .7 } });
     });
     return () => media.revert();
   }, { scope: sectionRef, dependencies: [reduceMotion], revertOnUpdate: true });
@@ -48,7 +46,7 @@ export function ProductShowcase() {
           {screens.map((item, index) => <button key={item} type="button" aria-pressed={screen === item} onClick={() => setScreen(item)}><span>0{index + 1}</span>{t(`${item}Tab`)}</button>)}
         </div>
         <div ref={stageRef} className="product-showcase__stage">
-          <motion.div className="product-showcase__frame" style={reduceMotion ? undefined : { y: frameY, rotate: frameRotate }}>
+          <motion.div className="product-showcase__frame" style={reduceMotion ? undefined : { y: frameY }}>
             <div className="product-window">
               <header className="product-window__topbar">
                 <div className="product-window__company"><span className="product-window__logo"><Building2 size={15} aria-hidden="true" /></span><span>{t("company")}</span><ChevronDown size={13} aria-hidden="true" /></div>
@@ -62,7 +60,7 @@ export function ProductShowcase() {
                   <nav>{[
                     { icon: LayoutDashboard, label: t("overviewTab"), id: "overview" }, { icon: FolderKanban, label: t("budgetTab"), id: "budget" },
                     { icon: CalendarRange, label: t("schedule") }, { icon: ClipboardCheck, label: t("reportsTab"), id: "reports" }, { icon: FileText, label: t("documents") }, { icon: UsersRound, label: t("team") },
-                  ].map((item) => <button key={item.label} type="button" className={screen === item.id ? "is-active" : ""} onClick={() => { if (screens.includes(item.id as Screen)) setScreen(item.id as Screen); }}><item.icon size={15} aria-hidden="true" /><span>{item.label}</span></button>)}</nav>
+                  ].map((item, index) => <button key={`${item.id ?? "destination"}-${index}`} type="button" className={screen === item.id ? "is-active" : ""} onClick={() => { if (screens.includes(item.id as Screen)) setScreen(item.id as Screen); }}><item.icon size={15} aria-hidden="true" /><span>{item.label}</span></button>)}</nav>
                   <div className="product-sidebar__bottom"><span className="product-sidebar__status"><i aria-hidden="true" />{t("synced")}</span><span>v2.4.0</span></div>
                 </aside>
                 <div className="product-window__content">
