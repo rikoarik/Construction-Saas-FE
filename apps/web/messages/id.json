@@ -2,6 +2,9 @@
   "common": {
     "brand": "Dexotic Groundwork", "brandMark": "D", "overviewTitle": "Ringkasan", "companyPlaceholder": "Pilih perusahaan", "projectPlaceholder": "Pilih proyek", "profilePlaceholder": "Akun", "skipToContent": "Loncat ke konten", "mainNavigation": "Navigasi utama", "mobileNavigation": "Navigasi seluler", "appearance": "Tampilan", "theme": "Tema", "light": "Terang", "dark": "Gelap", "system": "Sistem", "language": "Bahasa", "english": "Bahasa Inggris", "indonesian": "Bahasa Indonesia", "projects": "Proyek", "overview": "Ringkasan", "reports": "Laporan harian", "documents": "Dokumen", "people": "Anggota", "templates": "Templat", "settings": "Pengaturan", "search": "Cari", "openNavigation": "Buka navigasi", "closeNavigation": "Tutup navigasi", "company": "Perusahaan", "project": "Proyek", "backToProjects": "Kembali ke proyek", "profile": "Akun", "workspace": "Ruang kerja", "navigation": "Navigasi", "menu": "Menu navigasi"
   },
+  "auth": {
+    "brand": "Dexotic Groundwork", "title": "Masuk", "intro": "Masuk ke ruang kerja Anda.", "email": "Email", "password": "Kata sandi", "signIn": "Masuk", "signingIn": "Sedang masuk…", "credentials": "Email atau kata sandi salah.", "rate": "Terlalu banyak percobaan. Silakan coba lagi nanti.", "unavailable": "Tidak dapat masuk. Silakan coba lagi."
+  },
   "home": {
     "eyebrow": "Ringkasan ruang kerja", "title": "Ruang Kerja Dexotic Groundwork", "description": "Ruang kerja manajemen proyek konstruksi", "primaryAction": "Lihat proyek", "secondaryAction": "Buka laporan harian", "recentProjects": "Proyek terbaru", "viewAll": "Lihat semua", "projectCode": "Kode proyek", "projectName": "Nama proyek", "client": "Klien", "updated": "Terakhir diperbarui", "status": "Status proyek", "emptyTitle": "Proyek akan muncul di sini", "emptyDescription": "Proyek yang tersedia untuk akun Anda akan ditampilkan di sini.", "scopeLabel": "Ringkasan ruang kerja"
   },

@@ -44,7 +44,7 @@ test("localized catalogs have corresponding user-facing values", () => {
   // Proper names, shared loanwords, identifiers, and integer quantities do not
   // change between locales. Keep this explicit so untranslated prose still fails.
   const localeInvariantKeys = new Set([
-    "common.brand", "common.brandMark", "landing.nav.pilot",
+    "common.brand", "common.brandMark", "auth.brand", "auth.email", "landing.nav.pilot",
     "landing.hero.reportLocation", "landing.hero.reportCode",
     "landing.explorer.status", "landing.explorer.telegram",
     "landing.explorer.buildingQuantity4",

@@ -2,6 +2,8 @@
 
 **Owner:** frontend lane · **Status:** 3 verified complete, 1 in progress, 69 planned/blocked (73 task IDs total; 70 not yet verified).
 
+The company-admin workspace was removed for a fresh start; references to the former workspace are historical and require revalidation.
+
 Status is recorded inline as `verified`, `in progress`, `planned`, or `blocked`. Dependency references are not task rows. `verified` requires the row's stated done evidence; commits alone are not sufficient. FE-001–FE-003 have implementation commits pushed on their respective branches; FE-004 is the next active task. The remaining backlog stays open until its acceptance evidence is present.
 
 Frontend work may begin against contract-ready OpenAPI mocks without waiting for backend implementation. UI must follow `docs/frontend/DESIGN.md`, `docs/frontend/FRONTEND.md`, and for Telegram UI `docs/frontend/TELEGRAM-MINI-APP.md`. Telegram Bot API/webhook work is not a frontend task and lives in the backend repository as `docs/delivery/BOT-TASKS.md` in the backend repository.
