@@ -93,6 +93,7 @@ export function PilotDialog({ isOpen, onClose }: PilotDialogProps) {
           </div>
         ) : (
           <form className="pilot-dialog__form" onSubmit={handleSubmit}>
+            <p className="pilot-dialog__notice">{t("demoNotice")}</p>
             <div className="form-group">
               <label htmlFor="company-name">{t("companyNameLabel")}</label>
               <input

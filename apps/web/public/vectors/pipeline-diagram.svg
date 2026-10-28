@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" fill="none">
+  <!-- Connector Arrows -->
+  <path d="M 220 110 L 260 110" stroke="var(--border)" stroke-width="2" />
+  <path d="M 252 105 L 260 110 L 252 115" stroke="var(--border)" stroke-width="2" fill="none" />
+
+  <path d="M 460 110 L 500 110" stroke="var(--primary)" stroke-width="2" />
+  <path d="M 492 105 L 500 110 L 492 115" stroke="var(--primary)" stroke-width="2" fill="none" />
+
+  <path d="M 700 110 L 740 110" stroke="var(--border)" stroke-width="2" />
+  <path d="M 732 105 L 740 110 L 732 115" stroke="var(--border)" stroke-width="2" fill="none" />
+
+  <!-- Step 1: Excel Ingestion -->
+  <g transform="translate(20, 50)">
+    <rect width="200" height="120" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
+    <rect x="16" y="16" width="32" height="32" rx="6" fill="var(--surface-raised)" stroke="var(--border)" />
+    <!-- Sheet icon -->
+    <path d="M 26 26 L 38 26 M 26 32 L 38 32 M 26 38 L 34 38" stroke="var(--text)" stroke-width="1.5" />
+    <text x="56" y="28" font-family="monospace" font-size="10" font-weight="700" fill="var(--primary)">01 / INGESTION</text>
+    <text x="56" y="42" font-family="sans-serif" font-size="12" font-weight="700" fill="var(--text)">XLSX RAB / BoQ</text>
+    <text x="16" y="74" font-family="sans-serif" font-size="11" fill="var(--text-muted)">Arbitrary sheet schemas mapped & validated to standard WBS</text>
+    <text x="16" y="100" font-family="monospace" font-size="9" fill="var(--positive)">1000+ line items parsed</text>
+  </g>
+
+  <!-- Step 2: Telegram Field Capture -->
+  <g transform="translate(260, 50)">
+    <rect width="200" height="120" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
+    <rect x="16" y="16" width="32" height="32" rx="6" fill="var(--surface-raised)" stroke="var(--border)" />
+    <!-- Mobile icon -->
+    <rect x="27" y="24" width="10" height="16" rx="2" stroke="var(--text)" stroke-width="1.5" />
+    <circle cx="32" cy="37" r="1" fill="var(--text)" />
+    <text x="56" y="28" font-family="monospace" font-size="10" font-weight="700" fill="var(--primary)">02 / FIELD INPUT</text>
+    <text x="56" y="42" font-family="sans-serif" font-size="12" font-weight="700" fill="var(--text)">Telegram Mini App</text>
+    <text x="16" y="74" font-family="sans-serif" font-size="11" fill="var(--text-muted)">Foremen submit batch volume + GPS photo in 45s over 3G</text>
+    <text x="16" y="100" font-family="monospace" font-size="9" fill="var(--positive)">Signed initData verified</text>
+  </g>
+
+  <!-- Step 3: Verified Ledger (Primary Highlight) -->
+  <g transform="translate(500, 40)">
+    <rect width="200" height="140" rx="10" fill="var(--surface-raised)" stroke="var(--primary)" stroke-width="2" />
+    <rect x="16" y="16" width="36" height="36" rx="6" fill="var(--selection-bg)" stroke="var(--primary)" stroke-width="1.5" />
+    <!-- Shield / Ledger icon -->
+    <path d="M 34 24 L 44 28 V 35 C 44 41 34 46 34 46 C 34 46 24 41 24 35 V 28 Z" stroke="var(--primary)" stroke-width="1.5" fill="none" />
+    <text x="60" y="28" font-family="monospace" font-size="10" font-weight="700" fill="var(--primary)">03 / CORE ENGINE</text>
+    <text x="60" y="44" font-family="sans-serif" font-size="13" font-weight="700" fill="var(--text)">PostgreSQL Ledger</text>
+    <text x="16" y="80" font-family="sans-serif" font-size="11" fill="var(--text)">NUMERIC(18,4) decimal math. Exactly-once ledger posting on supervisor approval.</text>
+    <rect x="16" y="112" width="168" height="18" rx="4" fill="var(--surface)" border="1" />
+    <text x="24" y="125" font-family="monospace" font-size="9" font-weight="600" fill="var(--primary)">SHA-256 TRANSACTION LOG</text>
+  </g>
+
+  <!-- Step 4: Immutable Official Artifacts -->
+  <g transform="translate(740, 50)">
+    <rect width="200" height="120" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
+    <rect x="16" y="16" width="32" height="32" rx="6" fill="var(--surface-raised)" stroke="var(--border)" />
+    <!-- Document icon -->
+    <path d="M 26 23 H 36 L 40 27 V 41 H 26 Z" stroke="var(--text)" stroke-width="1.5" fill="none" />
+    <text x="56" y="28" font-family="monospace" font-size="10" font-weight="700" fill="var(--primary)">04 / REPORTING</text>
+    <text x="56" y="42" font-family="sans-serif" font-size="12" font-weight="700" fill="var(--text)">Official PDF & XLSX</text>
+    <text x="16" y="74" font-family="sans-serif" font-size="11" fill="var(--text-muted)">Immutable snapshot exports with formal contractor/MK signoffs</text>
+    <text x="16" y="100" font-family="monospace" font-size="9" fill="var(--positive)">100% reproducible historicals</text>
+  </g>
+</svg>

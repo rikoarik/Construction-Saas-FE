@@ -12,7 +12,7 @@ type ThemeSnapshot = {
 };
 
 const THEME_STORAGE_KEY = "construction-saas-theme";
-const SERVER_THEME: ThemeSnapshot = { preference: "system", resolved: "light" };
+const SERVER_THEME: ThemeSnapshot = { preference: "light", resolved: "light" };
 let currentTheme = SERVER_THEME;
 const listeners = new Set<() => void>();
 let systemTheme: "light" | "dark" = "light";
@@ -25,9 +25,9 @@ function isThemePreference(value: string | null): value is ThemePreference {
 function readSavedPreference(): ThemePreference {
   try {
     const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-    return isThemePreference(saved) ? saved : "system";
+    return isThemePreference(saved) ? saved : "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 

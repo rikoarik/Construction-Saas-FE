@@ -1,6 +1,6 @@
 "use client";
 
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, TableHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TableHTMLAttributes } from "react";
 import { X } from "lucide-react";
 import { useEffect, useId, useRef } from "react";
 
@@ -19,7 +19,7 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const classes = ["ui-button", `ui-button--${variant}`, className].filter(Boolean).join(" ");
+  const classes = ["button", `button--${variant}`, "ui-button", className].filter(Boolean).join(" ");
   return (
     <button
       type="button"
@@ -28,7 +28,8 @@ export function Button({
       disabled={disabled || busy}
       aria-busy={busy || undefined}
     >
-      {children}
+      {busy && <span className="ui-button__spinner" aria-hidden="true" />}
+      <span>{children}</span>
     </button>
   );
 }
@@ -63,6 +64,31 @@ export function TextField({ label, hint, error, id, required, className = "", ..
       {error ? <p className="ui-field__error" id={errorId}>{error}</p> : null}
     </div>
   );
+}
+
+export interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  label: string;
+  hint?: string;
+  error?: string;
+  children: ReactNode;
+}
+
+export function SelectField({ label, hint, error, id, required, className = "", children, ...props }: SelectFieldProps) {
+  const generatedId = useId();
+  const fieldId = id ?? generatedId;
+  const describedBy = [props["aria-describedby"], hint ? `${fieldId}-hint` : undefined, error ? `${fieldId}-error` : undefined].filter(Boolean).join(" ") || undefined;
+  return <div className="ui-field">
+    <label className="ui-field__label" htmlFor={fieldId}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label>
+    <select {...props} id={fieldId} required={required} aria-invalid={error ? true : props["aria-invalid"]} aria-describedby={describedBy} className={["ui-field__control", className].filter(Boolean).join(" ")}>{children}</select>
+    {hint && <p className="ui-field__hint" id={`${fieldId}-hint`}>{hint}</p>}
+    {error && <p className="ui-field__error" id={`${fieldId}-error`}>{error}</p>}
+  </div>;
+}
+
+export type DateFieldProps = Omit<TextFieldProps, "type"> & { min?: string; max?: string };
+
+export function DateField(props: DateFieldProps) {
+  return <TextField {...props} type="date" />;
 }
 
 export interface DialogProps {

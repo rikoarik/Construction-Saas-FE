@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <!-- Connections -->
+  <path d="M 400 60 L 400 110 M 400 110 L 180 150 M 400 110 L 400 150 M 400 110 L 620 150" stroke="var(--border)" stroke-width="2" stroke-dasharray="4 4" />
+  <path d="M 180 200 L 180 250 M 180 250 L 100 290 M 180 250 L 260 290" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="3 3" />
+  <path d="M 400 200 L 400 290" stroke="var(--primary)" stroke-width="2" />
+  <path d="M 620 200 L 620 250 M 620 250 L 540 290 M 620 250 L 700 290" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="3 3" />
+
+  <!-- Root Node: Contract Baseline -->
+  <g transform="translate(280, 20)">
+    <rect width="240" height="50" rx="8" fill="var(--surface)" stroke="var(--primary)" stroke-width="2" />
+    <rect x="12" y="15" width="20" height="20" rx="4" fill="var(--selection-bg)" stroke="var(--primary)" stroke-width="1.5" />
+    <text x="42" y="28" font-family="sans-serif" font-size="12" font-weight="700" fill="var(--text)">CONTRACT BOQ BASELINE</text>
+    <text x="42" y="42" font-family="monospace" font-size="10" fill="var(--primary)">100.00% · Rp 248.600.000.000</text>
+  </g>
+
+  <!-- Level 1 Nodes -->
+  <g transform="translate(80, 150)">
+    <rect width="200" height="50" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
+    <text x="14" y="26" font-family="sans-serif" font-size="11" font-weight="600" fill="var(--text)">1.00 SUBSTRUCTURE</text>
+    <text x="14" y="40" font-family="monospace" font-size="10" fill="var(--text-muted)">Bobot: 28.40% · Done 100%</text>
+  </g>
+
+  <g transform="translate(300, 150)">
+    <rect width="200" height="50" rx="6" fill="var(--surface-raised)" stroke="var(--primary)" stroke-width="2" />
+    <circle cx="184" cy="18" r="4" fill="var(--primary)" />
+    <text x="14" y="26" font-family="sans-serif" font-size="11" font-weight="700" fill="var(--text)">2.00 SUPERSTRUCTURE</text>
+    <text x="14" y="40" font-family="monospace" font-size="10" fill="var(--primary)">Bobot: 46.80% · In Progress</text>
+  </g>
+
+  <g transform="translate(520, 150)">
+    <rect width="200" height="50" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5" />
+    <text x="14" y="26" font-family="sans-serif" font-size="11" font-weight="600" fill="var(--text)">3.00 MEP ARCHITECTURAL</text>
+    <text x="14" y="40" font-family="monospace" font-size="10" fill="var(--text-muted)">Bobot: 24.80% · Scheduled</text>
+  </g>
+
+  <!-- Level 2 Leaf Nodes -->
+  <g transform="translate(20, 290)">
+    <rect width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1" />
+    <text x="10" y="22" font-family="sans-serif" font-size="10" font-weight="600" fill="var(--text)">1.01 Bored Pile Ø800</text>
+    <text x="10" y="38" font-family="monospace" font-size="9" fill="var(--positive)">Vol: 4.800 m · 100%</text>
+    <text x="10" y="50" font-family="sans-serif" font-size="9" fill="var(--text-muted)">Signed by Eng. Hendra</text>
+  </g>
+
+  <g transform="translate(190, 290)">
+    <rect width="160" height="60" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1" />
+    <text x="10" y="22" font-family="sans-serif" font-size="10" font-weight="600" fill="var(--text)">1.02 Pile Cap Concrete</text>
+    <text x="10" y="38" font-family="monospace" font-size="9" fill="var(--positive)">Vol: 1.240 m³ · 100%</text>
+    <text x="10" y="50" font-family="sans-serif" font-size="9" fill="var(--text-muted)">Verified & Posted</text>
+  </g>
+
+  <!-- Active Focus Leaf Node -->
+  <g transform="translate(320, 290)">
+    <rect width="200" height="75" rx="8" fill="var(--surface)" stroke="var(--primary)" stroke-width="2" />
+    <rect x="0" y="0" width="200" height="6" rx="3" fill="var(--primary)" />
+    <text x="12" y="25" font-family="sans-serif" font-size="11" font-weight="700" fill="var(--text)">2.03 Floor Slab Lt. 4</text>
+    <text x="12" y="42" font-family="monospace" font-size="10" font-weight="600" fill="var(--primary)">19.04 m³ / 820.00 m³</text>
+    <rect x="12" y="50" width="176" height="4" rx="2" fill="var(--border)" />
+    <rect x="12" y="50" width="146" height="4" rx="2" fill="var(--primary)" />
+    <text x="12" y="66" font-family="monospace" font-size="9" fill="var(--text-muted)">Cumulative: 83.0% · +GPS Proof</text>
+  </g>
+
+  <g transform="translate(530, 290)">
+    <rect width="140" height="60" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1" />
+    <text x="10" y="22" font-family="sans-serif" font-size="10" font-weight="600" fill="var(--text)">3.01 HVAC Ducting</text>
+    <text x="10" y="38" font-family="monospace" font-size="9" fill="var(--text-muted)">0% · Start W14</text>
+  </g>
+
+  <g transform="translate(680, 290)">
+    <rect width="110" height="60" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1" />
+    <text x="8" y="22" font-family="sans-serif" font-size="10" font-weight="600" fill="var(--text)">3.02 Fire Alarm</text>
+    <text x="8" y="38" font-family="monospace" font-size="9" fill="var(--text-muted)">0% · Start W16</text>
+  </g>
+</svg>

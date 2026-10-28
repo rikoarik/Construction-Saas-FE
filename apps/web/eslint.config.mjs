@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/scrollcraft.js", // Vendored runtime from scroll-craft; keep upstream source unmodified.
   ]),
 ]);
 

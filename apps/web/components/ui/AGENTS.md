@@ -1,0 +1,6 @@
+# UI component rules
+
+- For new controls, use shared primitives in `components/ui/primitives.tsx` rather than copy/pasting raw buttons, labeled inputs, selects, date pickers, or dialogs. Use `Button` with `busy` for a circular loading indicator while retaining its accessible label. Use `TextField`, `SelectField`, or `DateField` for ordinary labeled form controls; native select/date behavior is intentional.
+- Use `NoticeToast` and `useNoticeToast` for status/error feedback (success/info dismiss after 5 seconds; error/warning after 8 seconds; hover/focus pauses the timer). Map API/domain errors to localized text and semantic tone (`error`, `warning`, `success`, `info`) in the feature component; never infer display text from raw HTTP response bodies. Persistent actionable validation errors must also stay associated with their fields, not toast alone.
+- Extend the shared components with a meaningful variant when a repeated need emerges; do not turn them into one-off styling prop bags. Follow semantic theme tokens in `app/globals.css`, accessible labels, focus, keyboard, and reduced-motion behavior.
+- Do not rewrite specialized navigation controls such as the locale selector into a generic form select unless its URL/keyboard behavior is preserved. Preserve existing styles and locally modified work.

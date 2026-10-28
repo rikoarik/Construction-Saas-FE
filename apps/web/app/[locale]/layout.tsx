@@ -40,7 +40,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${plexSans.variable} ${plexMono.variable}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
@@ -48,13 +48,12 @@ export default async function LocaleLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {`try {
             var saved = localStorage.getItem("construction-saas-theme");
-            var dark = saved === "dark" || (saved !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+            var dark = saved === "dark" || (saved === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
             document.documentElement.dataset.theme = dark ? "dark" : "light";
             document.documentElement.style.colorScheme = dark ? "dark" : "light";
           } catch (_) {
-            var systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
-            document.documentElement.dataset.theme = systemDark ? "dark" : "light";
-            document.documentElement.style.colorScheme = systemDark ? "dark" : "light";
+            document.documentElement.dataset.theme = "light";
+            document.documentElement.style.colorScheme = "light";
           }`}
         </Script>
       </body>

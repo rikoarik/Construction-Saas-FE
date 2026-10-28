@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { Button, Dialog, TableRegion, TextField } from "../components/ui/primitives";
+import { Button, DateField, Dialog, SelectField, TableRegion, TextField } from "../components/ui/primitives";
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -11,6 +11,18 @@ describe("accessible primitives", () => {
     expect(button).toHaveAttribute("type", "button");
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute("aria-busy", "true");
+    expect(button.querySelector(".ui-button__spinner")).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("labels native dropdown and date picker with validation guidance", () => {
+    render(<><SelectField label="Company" error="Choose a company"><option value="">Choose</option><option value="a">Company A</option></SelectField><DateField label="Report date" hint="Use the report date" min="2026-01-01" /></>);
+    const select = screen.getByRole("combobox", { name: "Company" });
+    expect(select).toHaveAttribute("aria-invalid", "true");
+    expect(select).toHaveAccessibleDescription("Choose a company");
+    const date = screen.getByLabelText("Report date");
+    expect(date).toHaveAttribute("type", "date");
+    expect(date).toHaveAttribute("min", "2026-01-01");
+    expect(date).toHaveAccessibleDescription("Use the report date");
   });
 
   it("associates field labels, hint, and validation error", () => {

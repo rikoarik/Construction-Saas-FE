@@ -38,13 +38,24 @@ test("English and Indonesian message catalogs have the same keys", () => {
   );
 });
 
+test("login form translation keys exist in both locales", async () => {
+  const source = await readFile(new URL("../components/auth/login-form.tsx", import.meta.url), "utf8");
+  const keys = [...source.matchAll(/\bt\("([^"]+)"\)/g)].map((match) => match[1]);
+  assert.ok(keys.length > 0, "no login form translation keys found");
+  for (const locale of ["en", "id"]) {
+    for (const key of keys) {
+      assert.equal(typeof catalogs[locale].auth[key], "string", `${locale}: missing auth.${key}`);
+    }
+  }
+});
+
 test("localized catalogs have corresponding user-facing values", () => {
   const enEntries = flatten(catalogs.en);
   const idEntries = flatten(catalogs.id);
   // Proper names, shared loanwords, identifiers, and integer quantities do not
   // change between locales. Keep this explicit so untranslated prose still fails.
   const localeInvariantKeys = new Set([
-    "common.brand", "common.brandMark", "auth.brand", "auth.email", "landing.nav.pilot",
+    "common.brand", "common.brandMark", "auth.brand", "auth.email", "platform.brand", "platform.title", "landing.nav.pilot",
     "landing.hero.reportLocation", "landing.hero.reportCode",
     "landing.explorer.status", "landing.explorer.telegram",
     "landing.explorer.buildingQuantity4",

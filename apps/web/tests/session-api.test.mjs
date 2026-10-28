@@ -9,12 +9,14 @@ const api = await import(`data:text/javascript;base64,${Buffer.from(js).toString
 const originalFetch = globalThis.fetch;
 afterEach(() => { globalThis.fetch = originalFetch; });
 
-test("login posts only to same-origin API and does not fetch CSRF", async () => {
+test("login obtains pre-auth CSRF and posts to same-origin API", async () => {
   const calls = [];
-  globalThis.fetch = async (...args) => { calls.push(args); return new Response(null, { status: 204 }); };
-  await api.login({ email: "person@example.test", password: "secret" });
-  assert.equal(calls.length, 1);
-  const [url, options] = calls[0];
+  globalThis.fetch = async (...args) => { calls.push(args); return args[0].endsWith("/csrf") ? Response.json({ csrf_token: "a".repeat(32) }) : Response.json({ next: "mfa_required" }); };
+  assert.equal(await api.login({ email: "person@example.test", password: "secret" }), "mfa_required");
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0][0], "/api/v1/auth/csrf");
+  const [url, options] = calls[1];
+  assert.equal(options.headers["X-CSRF-Token"], "a".repeat(32));
   assert.equal(url, "/api/v1/auth/login");
   assert.equal(options.credentials, "same-origin");
   assert.equal(options.redirect, "error");
@@ -45,6 +47,6 @@ test("failed or malformed CSRF prevents logout", async () => {
 });
 
 test("unexpected successful status is not treated as a completed login", async () => {
-  globalThis.fetch = async () => Response.json({});
+  globalThis.fetch = async (url) => url.endsWith("/csrf") ? Response.json({ csrf_token: "a".repeat(32) }) : Response.json({ next: "unexpected" });
   await assert.rejects(api.login({ email: "person@example.test", password: "secret" }), (error) => error.kind === "invalid_response");
 });

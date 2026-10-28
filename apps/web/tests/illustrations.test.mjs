@@ -2,35 +2,23 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const assetPath = new URL("../public/illustrations/empty-projects.svg", import.meta.url);
-const illustrationPath = new URL("../components/illustrations/project-empty-illustration.tsx", import.meta.url);
-const frameworkPath = new URL("../components/illustrations/empty-state.tsx", import.meta.url);
+const names = [
+  "empty-projects", "empty-budget", "empty-schedule", "empty-reports",
+  "empty-documents", "state-no-access", "state-offline",
+];
 
-test("owned empty-projects SVG follows the theme-safe asset convention", async () => {
-  const svg = await readFile(assetPath, "utf8");
+for (const name of names) {
+  test(`${name} is a safe landscape line illustration`, async () => {
+    const svg = await readFile(new URL(`../public/illustrations/${name}.svg`, import.meta.url), "utf8");
+    assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 240 144" fill="none">/);
+    assert.match(svg, /stroke="#000" stroke-width="1\.8"/);
+    assert.doesNotMatch(svg, /<(?:script|image|foreignObject)\b|<animate\b|<linearGradient\b|<radialGradient\b|data:|href=|<text\b/i);
+  });
+}
 
-  assert.match(svg, /<svg\s[^>]*viewBox="0 0 240 144"/);
-  assert.match(svg, /stroke="currentColor"/);
-  assert.doesNotMatch(svg, /<(?:script|image|animate|animateTransform)\b|(?:href|xlink:href)=|<linearGradient\b/i);
-  assert.doesNotMatch(svg, /#[\da-f]{3,8}\b/i);
-  assert.ok((svg.match(/<path\b/g) ?? []).length <= 12);
-});
-
-test("inline empty-project illustration is decorative and uses inherited theme color", async () => {
-  const source = await readFile(illustrationPath, "utf8");
-
-  assert.match(source, /aria-hidden="true"/);
-  assert.match(source, /focusable="false"/);
-  assert.match(source, /stroke="currentColor"/);
-  assert.match(source, /viewBox="0 0 240 144"/);
-});
-
-test("empty-state framework accepts caller-provided localized content and optional action", async () => {
-  const source = await readFile(frameworkPath, "utf8");
-
-  assert.match(source, /title: string/);
-  assert.match(source, /description\?: string/);
-  assert.match(source, /illustration\?: ReactNode/);
-  assert.match(source, /action\?: ReactNode/);
-  assert.doesNotMatch(source, /useTranslations|href="/);
+test("filtered and quiet states do not show first-use illustrations", async () => {
+  const component = await readFile(new URL("../components/illustrations/empty-state.tsx", import.meta.url), "utf8");
+  assert.match(component, /kind === "first-use" && illustration/);
+  assert.match(component, /aria-hidden="true"/);
+  assert.match(component, /title: string/);
 });

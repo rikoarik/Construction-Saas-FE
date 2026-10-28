@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PilotSectionProps { onRequestPilot: () => void; }
@@ -14,7 +14,8 @@ export function PilotSection({ onRequestPilot }: PilotSectionProps) {
             <div className="eyebrow">{t("eyebrow")}</div>
             <h2 id="pilot-heading">{t("title")}</h2>
             <p>{t("description")}</p>
-            <button type="button" className="button button--primary" onClick={onRequestPilot}>{t("tier1Cta")}<ArrowUpRight size={17} aria-hidden="true" /></button>
+            <a className="button button--primary" href="#product-ui">{t("tier1Cta")}</a>
+            <button type="button" className="pilot-panel__demo" onClick={onRequestPilot}>{t("demoCta")}</button>
           </div>
           <div className="pilot-panel__details">
             <div className="pilot-panel__label"><span>{t("tier1Badge")}</span><span>{t("tier1Price")}</span></div>
