@@ -1,57 +1,92 @@
 {
   "common": {
-    "brand": "Construction SaaS",
-    "workspaceDescription": "Ruang kerja pengelolaan proyek konstruksi.",
-    "brandMark": "C",
-    "overviewTitle": "Ringkasan",
-    "companyPlaceholder": "Pilih perusahaan",
-    "projectPlaceholder": "Pilih proyek",
-    "profilePlaceholder": "Akun",
-    "skipToContent": "Lewati ke konten",
-    "appearance": "Tampilan",
-    "openAppearanceSettings": "Buka pengaturan tampilan",
-    "theme": "Tema",
-    "light": "Terang",
-    "dark": "Gelap",
-    "system": "Sistem",
-    "language": "Bahasa",
-    "english": "English",
-    "indonesian": "Bahasa Indonesia",
-    "projects": "Proyek",
-    "overview": "Ringkasan",
-    "reports": "Laporan harian",
-    "documents": "Dokumen",
-    "people": "Anggota",
-    "templates": "Templat",
-    "settings": "Pengaturan",
-    "search": "Cari",
-    "openNavigation": "Buka navigasi",
-    "closeNavigation": "Tutup navigasi",
-    "company": "Perusahaan",
-    "project": "Proyek",
-    "backToProjects": "Kembali ke proyek",
-    "profile": "Akun",
-    "workspace": "Ruang kerja",
-    "navigation": "Navigasi",
-    "menu": "Menu"
+    "brand": "Dexotic Groundwork", "brandMark": "D", "overviewTitle": "Ringkasan", "companyPlaceholder": "Pilih perusahaan", "projectPlaceholder": "Pilih proyek", "profilePlaceholder": "Akun", "skipToContent": "Loncat ke konten", "mainNavigation": "Navigasi utama", "mobileNavigation": "Navigasi seluler", "appearance": "Tampilan", "theme": "Tema", "light": "Terang", "dark": "Gelap", "system": "Sistem", "language": "Bahasa", "english": "Bahasa Inggris", "indonesian": "Bahasa Indonesia", "projects": "Proyek", "overview": "Ringkasan", "reports": "Laporan harian", "documents": "Dokumen", "people": "Anggota", "templates": "Templat", "settings": "Pengaturan", "search": "Cari", "openNavigation": "Buka navigasi", "closeNavigation": "Tutup navigasi", "company": "Perusahaan", "project": "Proyek", "backToProjects": "Kembali ke proyek", "profile": "Akun", "workspace": "Ruang kerja", "navigation": "Navigasi", "menu": "Menu navigasi"
+  },
+  "auth": {
+    "brand": "Dexotic Groundwork", "title": "Masuk", "intro": "Masuk ke ruang kerja Anda.", "email": "Email", "password": "Kata sandi", "signIn": "Masuk", "signingIn": "Sedang masuk…", "credentials": "Email atau kata sandi salah.", "rate": "Terlalu banyak percobaan. Silakan coba lagi nanti.", "unavailable": "Tidak dapat masuk. Silakan coba lagi."
   },
   "home": {
-    "eyebrow": "Ringkasan ruang kerja",
-    "title": "Construction SaaS",
-    "description": "Ruang kerja manajemen proyek konstruksi",
-    "primaryAction": "Lihat proyek",
-    "secondaryAction": "Buka laporan harian",
-    "recentProjects": "Proyek terbaru",
-    "viewAll": "Lihat semua",
-    "projectCode": "Kode proyek",
-    "projectName": "Nama proyek",
-    "client": "Klien",
-    "updated": "Terakhir diperbarui",
-    "status": "Status",
-    "emptyTitle": "Proyek akan tampil di sini",
-    "emptyDescription": "Daftar ini menampilkan proyek yang tersedia untuk akun Anda.",
-    "scopeLabel": "Ringkasan ruang kerja",
-    "unavailableTitle": "Ruang kerja proyek belum tersedia",
-    "unavailableDescription": "Login dan akses proyek belum terhubung. Data perusahaan atau proyek belum ditampilkan."
+    "eyebrow": "Ringkasan ruang kerja", "title": "Ruang Kerja Dexotic Groundwork", "description": "Ruang kerja manajemen proyek konstruksi", "primaryAction": "Lihat proyek", "secondaryAction": "Buka laporan harian", "recentProjects": "Proyek terbaru", "viewAll": "Lihat semua", "projectCode": "Kode proyek", "projectName": "Nama proyek", "client": "Klien", "updated": "Terakhir diperbarui", "status": "Status proyek", "emptyTitle": "Proyek akan muncul di sini", "emptyDescription": "Proyek yang tersedia untuk akun Anda akan ditampilkan di sini.", "scopeLabel": "Ringkasan ruang kerja"
+  },
+  "landing": {
+    "chart": { "aria": "Progres fisik kumulatif ilustratif proyek jalan hingga minggu kelima", "buildingAria": "Progres fisik kumulatif ilustratif proyek gedung hingga minggu kelima", "week": "M{week}", "weekLabel": "Minggu", "planned": "Rencana", "actual": "Realisasi disetujui", "table": "Lihat data grafik" },
+    "nav": {
+      "reality": "Masalah", "interactive": "Produk", "integrity": "Keterlacakan", "pilot": "Pilot", "faq": "Tanya jawab", "requestPilot": "Ajukan pilot"
+    },
+    "hero": {
+      "badge": "Kendali proyek untuk kontraktor",
+      "title": "Setiap angka progres, jelas asalnya.",
+      "subtitle": "Hubungkan RAB, laporan lapangan, dan persetujuan pengawas dalam satu alur. Pantau progres dan siapkan laporan mingguan dari data proyek yang sama.",
+      "ctaPrimary": "Ajukan pilot", "ctaSecondary": "Lihat cara kerjanya", "pilotNote": "Pilot terpandu untuk dua proyek Anda.",
+      "demoLabel": "Data proyek ilustratif", "projectName": "Jalan Lingkar Timur", "projectLocation": "Paket 2 · Jakarta", "periodLabel": "Minggu 05 · Februari 2026",
+      "plannedLabel": "Progres rencana", "actualLabel": "Realisasi disetujui", "varianceLabel": "Deviasi", "plannedValue": "39,50%", "actualValue": "35,40%", "varianceValue": "−4,10 pp",
+      "progressChart": "Progres terhadap baseline", "chartAria": "Grafik ilustratif perbandingan progres rencana dan realisasi disetujui hingga minggu kelima", "legendPlanned": "Rencana", "legendActual": "Realisasi disetujui",
+      "reportWork": "Lapis pondasi agregat", "reportLocation": "STA 14+200", "reportCode": "FR-026", "reportQuantity": "340,00 m³", "reportStatus": "Disetujui",
+      "sourceLink": "Buka detail", "openReport": "Buka laporan {code}: {work}", "proofNote": "FR-026 adalah salah satu laporan disetujui yang menjadi bagian dari progres proyek.",
+      "traceEyebrow": "Dari angka ke sumbernya", "traceTitle": "Dari progres ke laporan sumber.", "traceDescription": "Telusuri volume FR-026, bukti lapangan, pemeriksaan, dan dokumen mingguannya.",
+      "traceTabsAria": "Penelusuran laporan proyek", "traceSource": "Laporan sumber", "traceEvidence": "Bukti lapangan", "traceDocument": "Dokumen mingguan",
+      "sourceSectionTitle": "Satu laporan, dengan konteks lengkap.", "sourceSectionDesc": "FR-026 menghubungkan volume pekerjaan, lokasi, bukti, dan pemeriksaan pengawas. Setelah disetujui, laporan ini tercatat satu kali dalam data progres proyek.",
+      "sourceReportLabel": "Laporan sumber", "sourceReviewLabel": "Pemeriksaan pengawas", "sourceReviewValue": "Volume dan bukti telah diperiksa · Revisi 03", "sourceSnapshotLabel": "Catatan proyek", "sourceSnapshotValue": "Dibukukan satu kali setelah disetujui", "sourceEvidenceLink": "Lihat bukti lapangan", "sourceDocumentLink": "Lihat dokumen mingguan",
+      "evidenceTitle": "Pekerjaan di balik angka volume.", "evidenceDescription": "Foto dan catatan lapangan tetap terhubung ke item pekerjaan serta revisi laporan yang didukungnya.", "evidenceImageAlt": "Pengawas pekerjaan jalan mencatat progres di samping agregat dan pekerjaan drainase", "evidenceNoteLabel": "Catatan lapangan", "evidenceNote": "Lapis pondasi agregat telah dihampar dan dipadatkan pada segmen yang diperiksa.", "evidenceLocationLabel": "Jalan Lingkar Timur · STA 14+200", "evidenceMeta": "2 foto lokasi · 6 Februari 2026 · 14.32", "evidenceReview": "Bukti diperiksa bersama laporan oleh pengawas", "evidenceNext": "Lihat dokumen yang diterbitkan",
+      "documentTitle": "Data yang sama, siap dilaporkan.", "documentDescription": "Dokumen mingguan menyimpan periode pelaporan dan snapshot sumbernya sehingga dapat direproduksi tanpa menyalin ulang angka.", "documentCompany": "Konstruksi Nusantara", "documentName": "Progres fisik mingguan", "documentPeriod": "2–8 Februari 2026 · Jalan Lingkar Timur", "documentPrepared": "Disiapkan oleh / Kendali proyek", "documentApproved": "Disetujui oleh / Manajer proyek", "documentSnapshot": "Snapshot M05 · Revisi 01 · Diterbitkan", "documentBack": "Kembali ke laporan sumber"
+    },
+    "reality": {
+      "eyebrow": "Lebih sedikit kerja administratif", "title": "Waktu tim habis untuk menyamakan angka.", "description": "Groundwork menghubungkan catatan yang memang dibutuhkan tim agar pekerjaan yang sama tidak perlu dimasukkan dan diperiksa lagi di file terpisah.",
+      "chaosTitle": "Yang terjadi sehari-hari", "ledgerTitle": "Dengan Groundwork",
+      "chaos1Title": "RAB beredar dalam beberapa versi", "chaos1Desc": "Tim membandingkan volume dan harga dari file yang berbeda.", "ledger1Title": "Satu versi RAB yang disetujui", "ledger1Desc": "Versi yang berlaku dan setiap perubahan berikutnya tetap jelas.",
+      "chaos2Title": "Foto dan volume tersebar di chat", "chaos2Desc": "Bukti datang terpisah dari pekerjaan yang didukungnya.", "ledger2Title": "Bukti melekat pada pekerjaan", "ledger2Desc": "Volume, foto, dan catatan tersimpan dalam laporan lapangan yang sama.",
+      "chaos3Title": "Angka disalin lagi menjelang rapat", "chaos3Desc": "Laporan mingguan selalu diawali rekonsiliasi ulang.", "ledger3Title": "Laporan dari data proyek yang disetujui", "ledger3Desc": "Dasbor dan dokumen mingguan memakai snapshot pelaporan yang sama.",
+      "nextLabel": "Lihat produk yang terhubung"
+    },
+    "explorer": {
+      "eyebrow": "Di dalam produk", "title": "Dari RAB sampai laporan mingguan.", "description": "Buka tampilan yang dipakai tim lapangan dan kantor untuk mencatat pekerjaan, memeriksa progres, dan menyiapkan dokumen proyek.", "demoNote": "Pratinjau interaktif dengan data ilustratif. Bukan data pelanggan atau proyek aktif.",
+      "productName": "Groundwork / Kendali proyek", "projectTypeAria": "Jenis proyek demo", "road": "Jalan", "building": "Gedung", "period": "Minggu 05 · Februari 2026",
+      "roadProject": "Jalan Lingkar Timur · Paket 2", "buildingProject": "Menara B · Jakarta", "roadMeta": "Infrastruktur · WBS berdasarkan STA dan item pekerjaan", "buildingMeta": "Gedung komersial · WBS berdasarkan lantai dan zona",
+      "viewsAria": "Tampilan produk", "overviewTab": "Ringkasan", "planTab": "RAB & jadwal", "reportsTab": "Laporan lapangan", "documentsTab": "Dokumen",
+      "overviewTitle": "Ketahui bagian yang perlu perhatian.", "overviewDescription": "Bandingkan realisasi yang disetujui dengan baseline dan lihat laporan yang menjadi bagian dari progres periode ini.",
+      "buildingPlannedValue": "26,50%", "buildingActualValue": "25,10%", "buildingVarianceValue": "−1,40 pp", "openReports": "Coba pelaporan lapangan",
+      "plannedLabel": "Rencana", "actualLabel": "Realisasi disetujui", "varianceLabel": "Deviasi", "plannedValue": "39,50%", "actualValue": "35,40%", "varianceValue": "−4,10 pp", "metricPeriod": "Kumulatif · Minggu 05",
+      "chartTitle": "Progres fisik", "chartPeriod": "Minggu 01–05", "chartAria": "Kurva-S ilustratif rencana dan realisasi hingga minggu kelima", "contributingReports": "Laporan lapangan disetujui", "contributingNote": "Setiap laporan yang disetujui dibukukan satu kali. Progres proyek mencakup seluruh item pekerjaan yang memenuhi syarat, bukan hanya contoh berikut.",
+      "report1Code": "FR-026", "report2Code": "FR-025", "report3Code": "FR-024", "roadReport1": "Lapis pondasi agregat", "roadReport2": "Pemasangan saluran U-ditch", "roadReport3": "Galian tanah biasa", "buildingReport1": "Pelat struktur lantai empat", "buildingReport2": "Pile cap dan tie beam", "buildingReport3": "Fondasi bored pile", "report1Meta": "Disetujui · 6 Feb · Revisi 03", "report2Meta": "Disetujui · 5 Feb · Revisi 01", "report3Meta": "Disetujui · 4 Feb · Revisi 02",
+      "planTitle": "Pertahankan struktur kontrak.", "planDescription": "Gunakan RAB XLSX yang sudah ada, tinjau struktur pekerjaannya, dan hubungkan progres ke versi yang berlaku.",
+      "importTitle": "Petakan dan validasi XLSX Anda", "importDescription": "Periksa kolom, volume, satuan, dan hierarki pekerjaan sebelum membuat draf RAB.", "budgetVersion": "RAB V03 · Disetujui",
+      "tableAria": "Item pekerjaan dan progres fisik ilustratif", "code": "Kode WBS", "workItem": "Item pekerjaan", "quantity": "Volume kontrak", "progress": "Progres item", "status": "Status", "approved": "Disetujui", "inReview": "Sedang diperiksa",
+      "roadCode1": "02.01", "roadCode2": "03.01", "roadCode3": "03.02", "roadCode4": "04.01", "roadItem1": "Galian tanah biasa", "roadItem2": "Lapis pondasi bawah agregat", "roadItem3": "Lapis pondasi agregat", "roadItem4": "Lapis aus aspal", "roadQuantity1": "42.500 m³", "roadQuantity2": "16.380 m³", "roadQuantity3": "18.200 m³", "roadQuantity4": "7.850 ton", "roadProgress1": "100%", "roadProgress2": "90%", "roadProgress3": "65%", "roadProgress4": "30%",
+      "buildingCode1": "1.01.01", "buildingCode2": "1.02.03", "buildingCode3": "1.03.02", "buildingCode4": "1.04.01", "buildingItem1": "Fondasi bored pile Ø800 mm", "buildingItem2": "Beton pile cap dan tie beam", "buildingItem3": "Pelat struktur lantai empat", "buildingItem4": "Kolom struktur lantai 5–6", "buildingQuantity1": "4.800 m", "buildingQuantity2": "1.240 m³", "buildingQuantity3": "680,6 m³", "buildingQuantity4": "198 m³", "buildingProgress1": "100%", "buildingProgress2": "100%", "buildingProgress3": "83%", "buildingProgress4": "44%",
+      "addendumTitle": "Perubahan kontrak tidak menghapus histori.", "addendumDescription": "Addendum berversi berlaku untuk pelaporan berikutnya, sementara dokumen terbit tetap menyimpan versi sumber aslinya.",
+      "reportsTitle": "Laporkan pekerjaan dari lokasinya.", "reportsDescription": "Coba alur lapangan Telegram berikut. Pengiriman ini hanya simulasi tampilan; tidak ada laporan nyata yang dikirim atau disetujui.",
+      "phoneAria": "Simulasi laporan lapangan Telegram Mini App", "telegram": "Telegram Mini App", "draftSaved": "Draf tersimpan", "assignedProject": "Proyek yang ditugaskan", "completedQuantity": "Volume selesai", "roadReportQuantity": "340,00 m³", "buildingReportQuantity": "19,04 m³", "evidence": "Bukti", "evidenceAttached": "2 foto lokasi terlampir", "evidenceMeta": "JPG · Terlampir pada laporan ilustratif ini",
+      "simulateSubmit": "Simulasikan pengiriman", "simulationSubmitted": "Status demo: dikirim untuk diperiksa. Tidak ada laporan yang dikirim.", "resetDemo": "Ulangi demo", "fieldEyebrow": "Dari lapangan ke kantor", "fieldTitle": "Laporan terstruktur, bukan rekap chat.", "fieldDescription": "Pelapor memilih pekerjaan, mengisi volume hasil pengukuran, dan melampirkan bukti melalui Telegram. Pengawas memeriksa laporan sebelum dapat memengaruhi progres yang disetujui.",
+      "fieldStep1Title": "Pilih pekerjaan dan lokasi", "fieldStep1Description": "Laporkan item WBS dan lokasi proyek yang memang ditugaskan.", "fieldStep2Title": "Tambahkan volume dan bukti", "fieldStep2Description": "Simpan pengukuran, catatan, dan foto dalam satu revisi laporan.", "fieldStep3Title": "Kirim untuk diperiksa pengawas", "fieldStep3Description": "Pemeriksaan dan persetujuan tetap menjadi tahap tersendiri dalam alur proyek.",
+      "simulationNote": "Hanya simulasi antarmuka. Pengiriman produksi memerlukan alur laporan backend.",
+      "documentsTitle": "Terbitkan laporan tanpa menyalin ulang angka.", "documentsDescription": "Tinjau laporan mingguan beserta periode, snapshot sumber, dan revisinya.",
+      "documentContextTitle": "Dokumen dengan sumber yang dapat ditelusuri.", "documentContextDescription": "Laporan terbit tetap terhubung ke data proyek dan versi yang digunakan untuk menyusunnya.", "documentStatusLabel": "Status penerbitan", "published": "Diterbitkan", "documentSourceLabel": "Snapshot sumber", "documentSourceValue": "M05 · Data proyek disetujui", "documentRevisionLabel": "Revisi dokumen", "documentRevisionValue": "Revisi 01",
+      "company": "Konstruksi Nusantara", "paperAria": "Dokumen ilustratif progres fisik mingguan", "paperTitle": "Progres fisik mingguan", "paperPeriod": "2–8 Februari 2026 · Snapshot M05", "paperPrepared": "Disiapkan oleh / Kendali proyek", "paperApproved": "Disetujui oleh / Manajer proyek"
+    },
+    "integrity": {
+      "eyebrow": "Akuntabilitas dalam setiap catatan", "title": "Sumbernya tercatat. Perubahannya terlacak.", "description": "Periksa histori laporan serta pahami data proyek dan hak akses yang berlaku.",
+      "f1Title": "Histori pemeriksaan yang jelas", "f1Desc": "Revisi laporan, catatan pemeriksaan, dan persetujuan tetap terhubung ke pekerjaan terkait.", "f1Spec": "Revisi 03 · Pemeriksaan pengawas · Disetujui 6 Feb 2026",
+      "f2Title": "Dokumen menyimpan sumbernya", "f2Desc": "Dokumen terbit mempertahankan snapshot pelaporan dan versi sumber agar dapat direproduksi.", "f2Spec": "Snapshot M05 · RAB V03 · Revisi dokumen 01",
+      "f3Title": "Akses mengikuti tanggung jawab", "f3Desc": "Keanggotaan perusahaan, penugasan proyek, dan izin peran menentukan siapa yang dapat melihat serta mengolah data.", "f3Spec": "Lingkup perusahaan · Lingkup proyek · Izin peran"
+    },
+    "pilot": {
+      "eyebrow": "Pilot terpandu", "title": "Uji Groundwork di dua proyek Anda.", "description": "Gunakan RAB dan alur pelaporan Anda sendiri. Tim kami mendampingi penyiapan proyek, penggunaan di lapangan, dan evaluasi pilot.",
+      "pilotFeaturesAria": "Lingkup pilot terpandu", "tier1Badge": "Cakupan pilot", "tier1Price": "Dua proyek aktif", "tier1Cta": "Ajukan pilot",
+      "tier1F1": "Dua proyek dengan struktur pekerjaan berbeda", "tier1F2": "Pemetaan dan validasi RAB XLSX Anda", "tier1F3": "Pendampingan tim lapangan untuk pelaporan Telegram", "tier1F4": "Tinjauan Kurva-S mingguan dan laporan resmi", "tier1F5": "Penelusuran rekonsiliasi dan histori pemeriksaan"
+    },
+    "faq": {
+      "eyebrow": "Pertanyaan praktis", "title": "Sebelum memulai pilot.", "description": "Jawaban untuk direktur proyek, tim QS, dan pengawas lapangan.",
+      "q1": "Bisakah kami memakai RAB Excel yang sudah ada?", "a1": "Bisa. Petakan kolom yang ada ke kode, uraian, volume, satuan, dan harga item. Tinjau hasil validasi serta hierarki pekerjaan sebelum membuat draf RAB.",
+      "q2": "Bagaimana tim lapangan mengirim laporan?", "a2": "Pelapor yang ditugaskan memakai Telegram Mini App untuk memilih pekerjaan, mengisi volume, melampirkan bukti, dan mengirim laporan untuk diperiksa. Tidak perlu memasang aplikasi terpisah.",
+      "q3": "Bagaimana addendum kontrak ditangani?", "a3": "Addendum membuat draf RAB berversi baru. Setelah disetujui, pelaporan berikutnya memakai versi yang berlaku, sedangkan laporan yang sudah terbit tetap terikat snapshot aslinya.",
+      "q4": "Apakah nilai progres sama dengan biaya aktual?", "a4": "Tidak. Nilai pekerjaan selesai berasal dari volume terverifikasi dan harga satuan kontrak. Nilai ini berbeda dari pengeluaran aktual dan arus kas keluar.",
+      "q5": "Siapa yang dapat mengakses data proyek kami?", "a5": "Akses dibatasi oleh keanggotaan perusahaan, penugasan proyek, dan izin peran. Backend menerapkan batas tersebut pada setiap permintaan."
+    },
+    "footer": {
+      "closingLabel": "Untuk mereka yang bertanggung jawab atas progres proyek.", "brandDesc": "RAB, laporan lapangan, persetujuan, dan dokumen resmi yang terhubung untuk kontraktor.", "navigationAria": "Navigasi footer", "navReality": "Masalah", "navLedger": "Produk", "navCapabilities": "Keterlacakan", "navPilot": "Program pilot", "factoryCredit": "Produk dari Dexotic Factory", "rights": "Kejelasan proyek, dari lapangan.", "backToTop": "Kembali ke atas"
+    },
+    "dialog": {
+      "title": "Ajukan pilot Groundwork", "description": "Ceritakan perusahaan dan proyek Anda agar kami dapat menyiapkan diskusi awal.", "companyNameLabel": "Nama perusahaan", "companyNamePlaceholder": "Nama perusahaan kontraktor", "contactNameLabel": "Nama dan peran kontak", "contactNamePlaceholder": "Nama dan peran Anda", "emailLabel": "Email kantor", "emailPlaceholder": "nama@perusahaan.co.id", "projectTypeLabel": "Jenis proyek utama", "projectTypeBuilding": "Gedung atau fasilitas komersial", "projectTypeInfra": "Jalan, jalan tol, atau jembatan", "projectTypeIndustrial": "Struktur industri atau lepas pantai", "submitButton": "Kirim pengajuan", "submitting": "Mengirim pengajuan…", "successMessage": "Ini hanya demo: pengajuan Anda belum dikirim. Endpoint pengiriman harus dihubungkan sebelum penggunaan produksi.", "close": "Tutup dialog"
+    }
   }
 }

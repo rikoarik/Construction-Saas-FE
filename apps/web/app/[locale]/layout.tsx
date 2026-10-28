@@ -1,11 +1,10 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { cookies } from "next/headers";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import Script from "next/script";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { routing } from "@/i18n/routing";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 import "../globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -31,30 +30,33 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: LocaleLayoutProps) {
-  const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
-  const t = await getTranslations({ locale, namespace: "common" });
-  return { title: t("brand"), description: t("workspaceDescription") };
-}
-
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-  const cookieStore = await cookies();
-  const savedTheme = cookieStore.get("construction-saas-theme")?.value;
-  const initialTheme = savedTheme === "light" || savedTheme === "dark" || savedTheme === "system"
-    ? savedTheme
-    : "system";
   const messages = await getMessages();
 
   return (
-    <html lang={locale} data-theme={initialTheme === "system" ? undefined : initialTheme}>
+    <html lang={locale}>
       <body className={`${plexSans.variable} ${plexMono.variable}`}>
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
+          {children}
         </NextIntlClientProvider>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`try {
+            var saved = localStorage.getItem("construction-saas-theme");
+            var dark = saved === "dark" || (saved !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+            document.documentElement.dataset.theme = dark ? "dark" : "light";
+            document.documentElement.style.colorScheme = dark ? "dark" : "light";
+          } catch (_) {
+            var systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+            document.documentElement.dataset.theme = systemDark ? "dark" : "light";
+            document.documentElement.style.colorScheme = systemDark ? "dark" : "light";
+          }`}
+        </Script>
       </body>
     </html>
   );

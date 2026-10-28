@@ -1,10 +1,12 @@
-import { AppShell } from "@/components/layout/app-shell";
-import { HomePage } from "@/components/layout/home-page";
+"use client";
+
+import { LandingPage } from "@/components/landing/landing-page";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export default function LocaleHome() {
   return (
-    <AppShell>
-      <HomePage />
-    </AppShell>
+    <ThemeProvider>
+      <LandingPage />
+    </ThemeProvider>
   );
 }
