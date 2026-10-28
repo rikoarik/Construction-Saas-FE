@@ -10,7 +10,7 @@ export function useNoticeToast() {
   const [message, setMessage] = useState<NoticeMessage | null>(null);
   const nextId = useRef(0);
   const dismiss = useCallback(() => setMessage(null), []);
-  const notify = (text: string, tone: NoticeTone = "error") => setMessage({ id: ++nextId.current, text, tone });
+  const notify = useCallback((text: string, tone: NoticeTone = "error") => setMessage({ id: ++nextId.current, text, tone }), []);
   return { message, dismiss, notify };
 }
 

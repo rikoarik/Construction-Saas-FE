@@ -18,6 +18,23 @@ describe("authenticator code field", () => {
     expect(container.querySelector(".auth-otp__slots")).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("highlights only the current digit slot while focused", () => {
+    const { container } = render(<OtpField label="Authenticator code" />);
+    const input = screen.getByRole("textbox", { name: "Authenticator code" });
+    const activeSlots = () => container.querySelectorAll(".auth-otp__slot--active");
+
+    fireEvent.focus(input);
+    expect(activeSlots()).toHaveLength(1);
+    expect(activeSlots()[0]).toBe(container.querySelectorAll(".auth-otp__slot")[0]);
+
+    fireEvent.change(input, { target: { value: "123" } });
+    expect(activeSlots()).toHaveLength(1);
+    expect(activeSlots()[0]).toBe(container.querySelectorAll(".auth-otp__slot")[3]);
+
+    fireEvent.blur(input);
+    expect(activeSlots()).toHaveLength(0);
+  });
+
   it("disables the input during verification", () => {
     render(<OtpField label="Authenticator code" disabled />);
     expect(screen.getByRole("textbox", { name: "Authenticator code" })).toBeDisabled();

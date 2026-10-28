@@ -88,7 +88,7 @@ export function LoginForm() {
             <h1 id="auth-title">{t(stage === "forgot" ? "resetTitle" : stage === "enroll" ? "enrollTitle" : stage === "challenge" ? "challengeTitle" : stage === "recovery" ? "recoveryTitle" : stage === "codes" ? "codesTitle" : "title")}</h1>
             <p className="auth-intro">{t(stage === "forgot" ? "forgotIntro" : stage === "enroll" ? "enrollIntro" : stage === "challenge" ? "challengeIntro" : stage === "recovery" ? "recoveryIntro" : stage === "codes" ? "codesIntro" : "intro")}</p>
           </div>
-          <form onSubmit={submit} className={stage === "enroll" ? "auth-form auth-form--enroll" : "auth-form"}>
+          <form onSubmit={submit} className={stage === "enroll" ? "auth-form auth-form--enroll" : stage === "challenge" ? "auth-form auth-form--challenge" : "auth-form"}>
             {(stage === "login" || stage === "forgot") && <><label htmlFor="email">{t("email")}</label><input id="email" name="email" type="email" autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} required /></>}
             {stage === "login" && <>
               <label htmlFor="password">{t("password")}</label>

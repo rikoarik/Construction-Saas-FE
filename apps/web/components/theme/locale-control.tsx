@@ -40,7 +40,7 @@ export function LocaleControl() {
 
   const selectLocale = (value: string) => {
     setOpen(false);
-    if (value !== locale) router.replace(pathname, { locale: value });
+    if (value !== locale) router.replace(`${pathname}${window.location.search}`, { locale: value });
   };
 
   const navigateOptions = (event: React.KeyboardEvent<HTMLDivElement>) => {

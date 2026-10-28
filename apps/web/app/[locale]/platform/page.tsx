@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { PlatformLogout } from "@/components/auth/platform-logout";
+// Preserve the existing platform session gate before entering the dashboard.
 import "@/components/auth/info-page.css";
 
 export default async function PlatformPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -34,13 +34,5 @@ export default async function PlatformPage({ params }: { params: Promise<{ local
   }
   if (!verified) return <main className="info-page"><article className="info-content"><h1>{t("unavailable")}</h1><Link href="/login">{t("back")}</Link></article></main>;
 
-  return <main className="info-page">
-    <header className="info-header"><Link href="/">{t("brand")}</Link></header>
-    <article className="info-content">
-      <p className="info-label">{t("label")}</p>
-      <h1>{t("title")}</h1>
-      <p className="info-description">{t("description")}</p>
-      <PlatformLogout />
-    </article>
-  </main>;
+  redirect(`/${locale}/superadmin/dashboard`);
 }

@@ -4,6 +4,414 @@
  */
 
 export interface paths {
+    "/platform/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires an active server-side session, MFA verification, platform access and platform.dashboard.read. Does not grant tenant content access. */
+        get: operations["getPlatformDashboardOperator"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Null means unavailable. Company/user previous totals use registration timestamps at the prior period boundary; failed_jobs.previous counts jobs still failed or retry-pending whose last failure occurred in the preceding period; delivered jobs are excluded. Failed-job values are null when legacy dead letters lack failure timestamps, so complete period counts cannot be established. active_projects.value counts projects whose current status is active; its previous value and series are always null because project status history is not recorded. Every series holds one point per UTC bucket of the period, oldest first; company and user series are cumulative totals, the failed-jobs series counts failures per bucket. */
+        get: operations["getPlatformDashboard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/company-growth": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Default range is 12m. UTC calendar buckets, including partial boundary buckets. */
+        get: operations["getPlatformCompanyGrowth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/company-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Provisioning companies are included in total but not active, suspended, or archived counts. */
+        get: operations["getPlatformCompanyStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Only allowlisted operational event types; no raw audit metadata. */
+        get: operations["getPlatformActivities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/subscription-distribution": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Companies grouped by their current subscription plan. A canceled or absent subscription is excluded, so the list can be empty while available is true. */
+        get: operations["getPlatformSubscriptionDistribution"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/storage-usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Storage accounting and quotas are currently unavailable; API request counts are measured. */
+        get: operations["getPlatformStorageUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/dashboard/integration-health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Email delivery failures indicate degraded delivery. A worker heartbeat newer than 30 seconds establishes process liveness, not provider delivery; absent or stale heartbeat yields unknown. Telegram and object storage remain unknown without operational probes. */
+        get: operations["getPlatformIntegrationHealth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.company.read and verified MFA. Metadata only; last_activity_at is the latest recorded audit event or null, never inferred from project activity. */
+        get: operations["listPlatformCompanies"];
+        put?: never;
+        /** @description Requires platform.company.create, MFA and CSRF. Creates a provisioning company, its first Admin invitation, audit and email outbox atomically. The company becomes active when the first invitation is accepted. */
+        post: operations["createPlatformCompany"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.company.read, MFA. Metadata only. */
+        get: operations["getPlatformCompany"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** @description Requires platform.company.update, MFA and CSRF. Archived companies cannot be edited. Null fields are ignored. */
+        patch: operations["updatePlatformCompany"];
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.company.suspend, MFA and CSRF. Only active to suspended; immediately denies workspace access without deleting data. */
+        post: operations["suspendPlatformCompany"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/reactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.company.reactivate, MFA and CSRF. Only suspended to active; existing memberships remain unchanged. */
+        post: operations["reactivatePlatformCompany"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.company.read and MFA. Counts only; no tenant project content. */
+        get: operations["getPlatformCompanyUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.member.read and MFA. Returns Admin and owner memberships and invitation status only. */
+        get: operations["getPlatformCompanyAdmins"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.member.invite, MFA and CSRF. One pending invitation per company/email; retries return INVITATION_CONFLICT and do not enqueue another email. */
+        post: operations["invitePlatformCompanyAdmin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/invitations/{invitationId}/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.member.invite, MFA and CSRF. Rotates the token and invalidates the old queued email in one transaction. */
+        post: operations["resendPlatformCompanyAdminInvitation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/invitations/{invitationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** @description Requires platform.member.revoke, MFA and CSRF. */
+        delete: operations["cancelPlatformCompanyAdminInvitation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/companies/{companyId}/members/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** @description Requires platform.member.revoke, MFA and CSRF. A company row lock protects the last active Admin from concurrent deactivation. */
+        patch: operations["setPlatformCompanyAdminStatus"];
+        trace?: never;
+    };
+    "/platform/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Requires platform.dashboard.read and verified MFA. Failed outbox events include historic dead letters with null failed_at; retry_pending requires a recorded failure timestamp. */
+        get: operations["listPlatformDashboardJobs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description Requires platform.dashboard.read and verified MFA. Entries are derived on
+         *     read from records the platform already keeps: outbox events that are dead
+         *     (including legacy dead letters without a recorded failure time) or
+         *     retry-pending with a recorded failure, suspended companies, and past-due
+         *     subscriptions. Nothing is copied into a notification table, so a
+         *     recovered job simply stops appearing. `unread` is the operator's total
+         *     unread count and does not change when a filter is applied; `type` and
+         *     `read` echo the filter that produced the page. Read markers belong to the
+         *     authenticated operator only.
+         */
+        get: operations["listPlatformNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/notifications/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * @description Requires platform.dashboard.read, verified MFA, and a CSRF token. Keys are
+         *     notification keys previously returned by the list endpoint. Unknown but
+         *     well-formed keys are accepted, because an entry can disappear between the
+         *     read and the mark; duplicate keys collapse. Marking is idempotent.
+         */
+        post: operations["markPlatformNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/notifications/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.dashboard.read, verified MFA, and a CSRF token. Clears read markers so the entries count as unread again. */
+        post: operations["markPlatformNotificationsUnread"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/platform/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Requires platform.dashboard.read, verified MFA, and a CSRF token. Marks every entry that currently exists for the operator; markers are not stored for entries the operator never saw. */
+        post: operations["markAllPlatformNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/platform/session": {
         parameters: {
             query?: never;
@@ -831,6 +1239,263 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        CompanyEditable: {
+            /** @description Creation only; immutable thereafter. */
+            code?: string;
+            name?: string;
+            legal_name?: string | null;
+            /** Format: email */
+            contact_email?: string | null;
+            phone?: string | null;
+            address?: string | null;
+            /** @description Valid IANA timezone */
+            timezone?: string;
+            /**
+             * Format: uuid
+             * @description Existing plan ID
+             */
+            plan_id?: string | null;
+            /**
+             * Format: email
+             * @description Required on creation; not editable.
+             */
+            admin_email?: string;
+        };
+        ManagedCompanyData: {
+            /** Format: uuid */
+            id: string;
+            code: string;
+            name: string;
+            legal_name: string | null;
+            /** Format: email */
+            contact_email: string | null;
+            phone: string | null;
+            address: string | null;
+            timezone: string;
+            /** Format: uuid */
+            plan_id: string | null;
+            subscription_plan: string | null;
+            /** @enum {string} */
+            status: "provisioning" | "active" | "suspended" | "archived";
+            /** Format: int64 */
+            access_version: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            last_activity_at: string | null;
+            suspended_reason: string | null;
+            /** Format: uuid */
+            suspended_by: string | null;
+            /** Format: date-time */
+            suspended_at: string | null;
+            /** Format: int64 */
+            member_count: number;
+            /** Format: int64 */
+            project_count: number;
+        };
+        ManagedCompanyPage: {
+            items: components["schemas"]["ManagedCompanyData"][];
+            limit: number;
+            offset: number;
+            /** Format: int64 */
+            total: number;
+            has_more: boolean;
+        };
+        CompanyAdminData: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: email */
+            email: string;
+            /** @enum {string} */
+            role: "owner" | "admin";
+            /** @enum {string} */
+            status: "active" | "suspended" | "removed";
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        CompanyInvitationData: {
+            /** Format: uuid */
+            id: string;
+            /** Format: email */
+            email: string;
+            /** @enum {string} */
+            status: "pending" | "accepted" | "expired" | "revoked";
+            /** Format: date-time */
+            expires_at: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        PlatformPeriod: {
+            /** @enum {string} */
+            range: "7d" | "30d" | "90d" | "12m";
+            /** Format: date-time */
+            start: string;
+            /** Format: date-time */
+            end: string;
+        };
+        PlatformMetric: {
+            /** Format: int64 */
+            value: number | null;
+            /** Format: int64 */
+            previous: number | null;
+            /** @description One point per UTC bucket of the selected period, oldest first. Company and user series are cumulative totals at each bucket; the failed-jobs series counts failures per bucket. Null means the history cannot be reconstructed from stored data. */
+            series: number[] | null;
+        };
+        PlatformDashboardData: {
+            period: components["schemas"]["PlatformPeriod"];
+            companies: components["schemas"]["PlatformMetric"];
+            users: components["schemas"]["PlatformMetric"];
+            active_projects: components["schemas"]["PlatformMetric"];
+            failed_jobs: components["schemas"]["PlatformMetric"];
+        };
+        PlatformGrowthData: {
+            period: components["schemas"]["PlatformPeriod"];
+            points: {
+                /** Format: date-time */
+                start: string;
+                /** Format: int64 */
+                new_companies: number;
+                /** Format: int64 */
+                total_companies: number;
+            }[];
+        };
+        /** @description Percentages use the confirmed company total as denominator; all are 0 when total is 0. */
+        PlatformStatusData: {
+            /** Format: int64 */
+            active: number;
+            /** Format: int64 */
+            suspended: number;
+            /** Format: int64 */
+            archived: number;
+            /** Format: int64 */
+            total: number;
+            active_percent: number;
+            suspended_percent: number;
+            archived_percent: number;
+        };
+        PlatformCompanyData: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** @enum {string} */
+            status: "provisioning" | "active" | "suspended" | "archived";
+            /** Format: date-time */
+            created_at: string;
+            /** @description Name of the current plan; null when the company has no current subscription. */
+            subscription_plan: string | null;
+            /** Format: int64 */
+            member_count: number;
+            /**
+             * Format: int64
+             * @description Every project of the company
+             */
+            project_count: number | null;
+        };
+        PlatformJobData: {
+            /**
+             * Format: int64
+             * @description Existing outbox identity
+             */
+            id: number;
+            /** Format: uuid */
+            company_id: string | null;
+            company_name: string | null;
+            type: string;
+            /** @enum {string} */
+            status: "failed" | "retry_pending";
+            /**
+             * @description Safe classification for new worker failures; null for legacy or unclassified records.
+             * @enum {string|null}
+             */
+            error_code: "JOB_EXECUTION_FAILED" | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            failed_at: string | null;
+            /** Format: date-time */
+            available_at: string;
+            attempts: number;
+            /** @description False until a safe */
+            retry_eligible: boolean;
+        };
+        PlatformActivityData: {
+            id: string;
+            /** @enum {string} */
+            type: "company.registered" | "company.suspended" | "company.reactivated" | "subscription.changed" | "job.failed";
+            /** Format: uuid */
+            company_id: string | null;
+            /** Format: date-time */
+            occurred_at: string;
+        };
+        PlatformCompanyPage: {
+            items: components["schemas"]["PlatformCompanyData"][];
+            limit: number;
+            offset: number;
+            has_more: boolean;
+        };
+        PlatformJobPage: {
+            items: components["schemas"]["PlatformJobData"][];
+            limit: number;
+            offset: number;
+            has_more: boolean;
+        };
+        PlatformActivityPage: {
+            items: components["schemas"]["PlatformActivityData"][];
+            limit: number;
+            offset: number;
+            has_more: boolean;
+        };
+        /**
+         * @description One derived feed entry. Type, severity, event_type, and error_code are
+         *     machine values; the frontend renders every human-readable string from its
+         *     own locale, so the API never ships prose. `key` is stable for the lifetime
+         *     of the underlying record and is what the mark-read endpoints accept.
+         */
+        PlatformNotificationData: {
+            key: string;
+            /** @enum {string} */
+            type: "process_failed" | "process_retry" | "company_suspended" | "subscription_past_due";
+            /** @enum {string} */
+            severity: "error" | "warning";
+            /** Format: uuid */
+            company_id: string | null;
+            company_name: string | null;
+            /** @description Outbox event type; null for company and subscription entries. */
+            event_type: string | null;
+            /** @description Recorded outbox error code; null when the failure has none. */
+            error_code: string | null;
+            /** @description Current plan name; null unless the entry is a past-due subscription. */
+            plan: string | null;
+            /**
+             * Format: date-time
+             * @description Time of the failure
+             */
+            occurred_at: string;
+            /** @description Whether this operator has marked the entry read. */
+            read: boolean;
+        };
+        PlatformNotificationPage: {
+            items: components["schemas"]["PlatformNotificationData"][];
+            /**
+             * Format: int64
+             * @description Operator's total unread count, independent of the active filter.
+             */
+            unread: number;
+            /**
+             * @description The filter that produced this page.
+             * @enum {string}
+             */
+            type: "" | "process" | "company" | "subscription";
+            /**
+             * @description The filter that produced this page.
+             * @enum {string}
+             */
+            read: "" | "unread" | "read";
+        };
         /** @example 19.04 */
         DecimalString: string;
         Company: {
@@ -904,13 +1569,246 @@ export interface components {
         };
         Error: {
             /** @enum {string} */
-            code: "VALIDATION_ERROR" | "UNAUTHENTICATED" | "FORBIDDEN" | "NOT_FOUND" | "CONFLICT" | "BUSINESS_RULE_VIOLATION" | "RATE_LIMITED" | "INTERNAL_ERROR";
+            code: "VALIDATION_ERROR" | "UNAUTHENTICATED" | "FORBIDDEN" | "PLATFORM_PERMISSION_DENIED" | "MFA_REQUIRED" | "NOT_FOUND" | "CONFLICT" | "BUSINESS_RULE_VIOLATION" | "RATE_LIMITED" | "INTERNAL_ERROR";
             params?: {
                 [key: string]: unknown;
             };
         };
     };
     responses: {
+        /** @description Company metadata and authoritative counts. */
+        ManagedCompany: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ManagedCompanyData"];
+            };
+        };
+        /** @description Filtered company metadata with deterministic ordering. */
+        ManagedCompanies: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ManagedCompanyPage"];
+            };
+        };
+        /** @description Company usage metadata; last activity is recorded administrative activity, not project activity. */
+        CompanyUsage: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    company_id: string;
+                    /** Format: int64 */
+                    member_count: number;
+                    /** Format: int64 */
+                    project_count: number;
+                    /** Format: date-time */
+                    last_activity_at: string | null;
+                };
+            };
+        };
+        /** @description Administrators and invitation history for this company only. */
+        CompanyAdmins: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    members: components["schemas"]["CompanyAdminData"][];
+                    invitations: components["schemas"]["CompanyInvitationData"][];
+                };
+            };
+        };
+        /** @description Administrator membership. */
+        CompanyAdmin: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["CompanyAdminData"];
+            };
+        };
+        /** @description Invitation metadata; token never returned. */
+        CompanyInvitation: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["CompanyInvitationData"];
+            };
+        };
+        /** @description COMPANY_NOT_FOUND or MEMBER_NOT_FOUND. */
+        CompanyMissing: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description COMPANY_NOT_FOUND or INVITATION_NOT_FOUND. */
+        InvitationMissing: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description COMPANY_CODE_CONFLICT, COMPANY_STATUS_CONFLICT, INVITATION_CONFLICT, IDEMPOTENCY_CONFLICT, or LAST_COMPANY_ADMIN. */
+        CompanyConflict: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Verified operator context. */
+        PlatformOperator: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    user_id: string;
+                    capabilities: string[];
+                    /** @constant */
+                    mfa_verified: true;
+                };
+            };
+        };
+        /** @description Platform counts; null denotes unimplemented data sources rather than zero. */
+        PlatformDashboard: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformDashboardData"];
+            };
+        };
+        /** @description UTC registration buckets. */
+        PlatformGrowth: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformGrowthData"];
+            };
+        };
+        /** @description Company lifecycle counts. */
+        PlatformStatus: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformStatusData"];
+            };
+        };
+        /** @description Recent company metadata. */
+        PlatformCompanies: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformCompanyPage"];
+            };
+        };
+        /** @description Failed outbox metadata. */
+        PlatformJobs: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformJobPage"];
+            };
+        };
+        /** @description Sanitized operational activities. */
+        PlatformActivities: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformActivityPage"];
+            };
+        };
+        /** @description Derived notification feed with the operator's read state. An empty list is a confirmed empty feed, not unavailable data. */
+        PlatformNotifications: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PlatformNotificationPage"];
+            };
+        };
+        /** @description Current subscriptions grouped by plan name. An empty list is a confirmed empty distribution. */
+        PlatformDistribution: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    available: boolean;
+                    items: {
+                        plan: string;
+                        /** Format: int64 */
+                        companies: number;
+                    }[];
+                };
+            };
+        };
+        /**
+         * @description Storage accounting has no authoritative source, so used_bytes stays null.
+         *     A configured storage quota is reported separately; otherwise quota_bytes
+         *     is null and quota_state is unknown. api_requests reports requests recorded
+         *     in the current UTC month, against a
+         *     platform-wide monthly quota from configuration. used is null until the
+         *     first request is recorded — unmetered traffic is unavailable, not a
+         *     confirmed zero — and limit is null when no quota is configured.
+         */
+        PlatformStorage: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** Format: int64 */
+                    used_bytes: number | null;
+                    /** Format: int64 */
+                    quota_bytes: number | null;
+                    /** @enum {string} */
+                    quota_state: "unknown" | "unlimited" | "limited";
+                    api_requests: {
+                        /** Format: int64 */
+                        used: number | null;
+                        /** Format: int64 */
+                        limit: number | null;
+                    } | null;
+                };
+            };
+        };
+        /** @description Operational signals only; unknown is not healthy. */
+        PlatformIntegrations: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    name: "telegram" | "email" | "object_storage" | "worker";
+                    /** @enum {string} */
+                    status: "healthy" | "degraded" | "unavailable" | "unknown";
+                    /** Format: date-time */
+                    checked_at: string | null;
+                }[];
+            };
+        };
         /** @description MFA completed and session cookie rotated. Enrollment returns recovery codes once. */
         MfaResult: {
             headers: {
@@ -998,6 +1896,16 @@ export interface components {
         };
     };
     parameters: {
+        CompanyLimit: number;
+        InvitationId: string;
+        UserId: string;
+        DashboardRange: "7d" | "30d" | "90d" | "12m";
+        DashboardLimit5: number;
+        DashboardLimit10: number;
+        DashboardOffset: number;
+        NotificationLimit: number;
+        /** @description Session-bound token from GET /auth/csrf. */
+        CsrfToken: string;
         CompanyId: string;
         ProjectId: string;
         ImportId: string;
@@ -1009,6 +1917,42 @@ export interface components {
         IdempotencyKey: string;
     };
     requestBodies: {
+        CreateCompany: {
+            content: {
+                "application/json": components["schemas"]["CompanyEditable"] & Record<string, never>;
+            };
+        };
+        UpdateCompany: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    legal_name?: string | null;
+                    /** Format: email */
+                    contact_email?: string | null;
+                    phone?: string | null;
+                    address?: string | null;
+                    timezone?: string;
+                    /** Format: uuid */
+                    plan_id?: string | null;
+                };
+            };
+        };
+        InviteCompanyAdmin: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                };
+            };
+        };
+        AdminStatus: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    status: "active" | "suspended";
+                };
+            };
+        };
         EmailInput: {
             content: {
                 "application/json": {
@@ -1031,12 +1975,515 @@ export interface components {
                 };
             };
         };
+        NotificationKeys: {
+            content: {
+                "application/json": {
+                    /** @description Notification keys from the list endpoint, for example `process:42` or `company:6f1c2b9e-….` Duplicates collapse, so repeated keys do not count twice against the bound of 100 unique keys per request. */
+                    keys: string[];
+                };
+            };
+        };
     };
     headers: never;
     pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    getPlatformDashboardOperator: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformOperator"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformDashboard: {
+        parameters: {
+            query?: {
+                range?: components["parameters"]["DashboardRange"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformDashboard"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformCompanyGrowth: {
+        parameters: {
+            query?: {
+                range?: components["parameters"]["DashboardRange"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformGrowth"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformCompanyStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformStatus"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformActivities: {
+        parameters: {
+            query?: {
+                limit?: components["parameters"]["DashboardLimit10"];
+                offset?: components["parameters"]["DashboardOffset"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformActivities"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformSubscriptionDistribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformDistribution"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformStorageUsage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformStorage"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getPlatformIntegrationHealth: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformIntegrations"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    listPlatformCompanies: {
+        parameters: {
+            query?: {
+                search?: string;
+                status?: "provisioning" | "active" | "suspended" | "archived";
+                plan_id?: string;
+                sort?: "-created_at" | "created_at" | "name" | "-name" | "code" | "-code";
+                limit?: components["parameters"]["CompanyLimit"];
+                offset?: components["parameters"]["DashboardOffset"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ManagedCompanies"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    createPlatformCompany: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["CreateCompany"];
+        responses: {
+            201: components["responses"]["ManagedCompany"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    getPlatformCompany: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ManagedCompany"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+        };
+    };
+    updatePlatformCompany: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["UpdateCompany"];
+        responses: {
+            200: components["responses"]["ManagedCompany"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    suspendPlatformCompany: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: components["responses"]["ManagedCompany"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    reactivatePlatformCompany: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["ManagedCompany"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    getPlatformCompanyUsage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["CompanyUsage"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+        };
+    };
+    getPlatformCompanyAdmins: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["CompanyAdmins"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+        };
+    };
+    invitePlatformCompanyAdmin: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["InviteCompanyAdmin"];
+        responses: {
+            201: components["responses"]["CompanyInvitation"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    resendPlatformCompanyAdminInvitation: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+                invitationId: components["parameters"]["InvitationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["CompanyInvitation"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["InvitationMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    cancelPlatformCompanyAdminInvitation: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+                invitationId: components["parameters"]["InvitationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Invitation revoked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["InvitationMissing"];
+        };
+    };
+    setPlatformCompanyAdminStatus: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path: {
+                companyId: components["parameters"]["CompanyId"];
+                userId: components["parameters"]["UserId"];
+            };
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["AdminStatus"];
+        responses: {
+            200: components["responses"]["CompanyAdmin"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["CompanyMissing"];
+            409: components["responses"]["CompanyConflict"];
+        };
+    };
+    listPlatformDashboardJobs: {
+        parameters: {
+            query?: {
+                status?: string;
+                limit?: components["parameters"]["DashboardLimit5"];
+                offset?: components["parameters"]["DashboardOffset"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformJobs"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    listPlatformNotifications: {
+        parameters: {
+            query?: {
+                type?: "" | "process" | "company" | "subscription";
+                read?: "" | "unread" | "read";
+                limit?: components["parameters"]["NotificationLimit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["PlatformNotifications"];
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    markPlatformNotificationsRead: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["NotificationKeys"];
+        responses: {
+            /** @description Markers stored. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    markPlatformNotificationsUnread: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: components["requestBodies"]["NotificationKeys"];
+        responses: {
+            /** @description Markers cleared. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["ValidationError"];
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    markAllPlatformNotificationsRead: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Session-bound token from GET /auth/csrf. */
+                "X-CSRF-Token": components["parameters"]["CsrfToken"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Every current entry marked read. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
     getPlatformSession: {
         parameters: {
             query?: never;

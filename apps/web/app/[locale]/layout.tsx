@@ -1,6 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
@@ -18,6 +18,13 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -41,7 +48,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${plexSans.variable} ${plexMono.variable}`}>
+      <body className={`${plexSans.variable} ${plexMono.variable} ${jakarta.variable}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

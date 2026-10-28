@@ -499,9 +499,10 @@
   }
 
   .theme-control {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1px;
+    gap: 0;
     margin: 0;
     border: 1px solid var(--border);
     border-radius: var(--radius-control);
@@ -510,6 +511,7 @@
   }
 
   .theme-control__button {
+    position: relative;
     display: grid;
     place-items: center;
     inline-size: 28px;
@@ -518,15 +520,25 @@
     padding: 0;
     cursor: pointer;
     border: 0;
-    border-radius: 4px;
+    border-radius: calc(var(--radius-control) - 3px);
     background: transparent;
     color: var(--text-muted);
   }
 
   .theme-control__button[aria-pressed="true"] {
-    background: var(--selection-bg);
     color: var(--text);
   }
+
+  /* The active pill is a single shared element so it slides between segments. */
+  .theme-control__indicator {
+    position: absolute;
+    inset: 1px;
+    z-index: 0;
+    border-radius: inherit;
+    background: var(--selection-bg);
+  }
+
+  .theme-control__icon { position: relative; z-index: 1; }
 
   .theme-control__button:hover { background: var(--surface-hover); }
   .theme-control__button:focus-visible, .locale-control__trigger:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -744,8 +756,10 @@
   .ui-field { display: grid; gap: .375rem; min-inline-size: 0; }
   .ui-field__label { color: var(--text); font-size: .875rem; font-weight: 600; }
   .ui-field__control { inline-size: 100%; min-block-size: 44px; border: 1px solid var(--control-border); border-radius: var(--radius-control); padding: .625rem .75rem; background: var(--surface); color: var(--text); font: inherit; }
-  .ui-field__control:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  /* Focus recolors the existing stroke; no second rounded outline or layout shift. */
+  .ui-field__control:focus { border-color: var(--focus); outline: none; }
   .ui-field__control[aria-invalid="true"] { border-color: var(--negative); }
+  .ui-field__control[aria-invalid="true"]:focus { border-color: var(--focus); }
   .ui-field__hint, .ui-field__error { margin: 0; font-size: .8125rem; line-height: 1.5; }
   .ui-field__hint { color: var(--text-muted); }
   .ui-field__error { color: var(--negative); }
@@ -757,6 +771,35 @@
   .ui-button[aria-busy="true"] > span:last-child { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   @keyframes ui-spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .ui-button__spinner { animation-duration: 1.6s; } }
+
+  .ui-dropdown { position: relative; display: inline-flex; min-inline-size: 0; }
+  .ui-dropdown__trigger { display: inline-flex; align-items: center; gap: .5rem; min-block-size: 38px; border: 1px solid var(--control-border); border-radius: var(--radius-control); padding-inline: .75rem; background: var(--surface); color: var(--text); font: inherit; font-size: .8125rem; font-weight: 500; cursor: pointer; }
+  .ui-dropdown__trigger:hover { background: var(--surface-hover); }
+  .ui-dropdown__icon { display: inline-flex; color: var(--text-muted); }
+  .ui-dropdown__value { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .ui-dropdown__chevron { flex: 0 0 auto; color: var(--text-muted); transition: transform 180ms ease-out; }
+  .ui-dropdown__chevron.is-open { transform: rotate(180deg); }
+  .ui-dropdown__menu { position: absolute; z-index: 50; inset-block-start: calc(100% + 6px); min-inline-size: 100%; inline-size: max-content; max-inline-size: min(280px, calc(100vw - 32px)); padding: 6px; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); box-shadow: var(--shadow-overlay); }
+  .ui-dropdown--end .ui-dropdown__menu { inset-inline-end: 0; }
+  .ui-dropdown--start .ui-dropdown__menu { inset-inline-start: 0; }
+  .ui-dropdown__caption { margin: 0 0 4px; padding: 6px 8px 4px; color: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .ui-dropdown__option { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; inline-size: 100%; padding: 8px 10px; border: 0; border-radius: calc(var(--radius-control) - 2px); background: transparent; color: var(--text); font: inherit; font-size: .8125rem; text-align: start; cursor: pointer; }
+  .ui-dropdown__option:hover, .ui-dropdown__option:focus-visible { background: var(--surface-hover); outline: none; }
+  .ui-dropdown__option[aria-selected="true"] { color: var(--primary); font-weight: 600; }
+  .ui-dropdown__option-label { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .ui-dropdown__option-hint { grid-column: 1; color: var(--text-muted); font-size: 11px; font-weight: 400; font-variant-numeric: tabular-nums; }
+  .ui-dropdown__check { grid-column: 2; grid-row: 1 / span 2; color: var(--primary); opacity: 0; }
+  .ui-dropdown__option[aria-selected="true"] .ui-dropdown__check { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .ui-dropdown__chevron { transition: none; } }
+
+  .ui-hint { position: relative; display: inline-flex; flex: 0 0 auto; }  .ui-hint__trigger { display: inline-flex; align-items: center; justify-content: center; inline-size: 20px; block-size: 20px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-muted); cursor: help; }
+  .ui-hint__trigger:hover { color: var(--text); }
+  .ui-hint__bubble { position: absolute; z-index: 60; inline-size: max-content; max-inline-size: min(260px, calc(100vw - 32px)); padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow-overlay); color: var(--text-muted); font-size: 11px; font-weight: 400; line-height: 1.5; text-align: start; white-space: normal; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 140ms ease-out, visibility 140ms ease-out; }
+  .ui-hint--bottom .ui-hint__bubble { top: calc(100% + 6px); inset-inline-end: -6px; }
+  .ui-hint--top .ui-hint__bubble { bottom: calc(100% + 6px); inset-inline-end: -6px; }
+  .ui-hint:hover .ui-hint__bubble, .ui-hint:focus-within .ui-hint__bubble { visibility: visible; opacity: 1; }
+  .ui-hint__trigger:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .ui-hint__bubble { transition: none; } }
 
   .projects-section {
     margin-block-start: 27px;

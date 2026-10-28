@@ -1,7 +1,8 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useId, useSyncExternalStore } from "react";
 import { Laptop, Moon, Sun } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 type ThemePreference = "light" | "dark" | "system";
@@ -75,7 +76,7 @@ function getServerSnapshot() {
   return SERVER_THEME;
 }
 
-function updateTheme(preference: ThemePreference) {
+export function updateTheme(preference: ThemePreference) {
   currentTheme = resolveTheme(preference);
   applyTheme(currentTheme);
   listeners.forEach((listener) => listener());
@@ -97,37 +98,41 @@ export function ThemeControl() {
     getSnapshot,
     getServerSnapshot,
   );
+  const reduceMotion = useReducedMotion();
+  // Unique per instance: two controls on one page must not swap indicators.
+  const indicatorId = useId();
+  const options = [
+    { value: "light", label: t("light"), Icon: Sun },
+    { value: "dark", label: t("dark"), Icon: Moon },
+    { value: "system", label: t("system"), Icon: Laptop },
+  ] as const;
 
   return (
     <fieldset className="theme-control" aria-label={t("theme")}>
       <legend className="sr-only">{t("theme")}</legend>
-        <button
-          aria-label={t("light")}
-          aria-pressed={preference.preference === "light"}
-          className="theme-control__button"
-          onClick={() => updateTheme("light")}
-          type="button"
-        >
-          <Sun aria-hidden="true" size={16} />
-        </button>
-        <button
-          aria-label={t("dark")}
-          aria-pressed={preference.preference === "dark"}
-          className="theme-control__button"
-          onClick={() => updateTheme("dark")}
-          type="button"
-        >
-          <Moon aria-hidden="true" size={16} />
-        </button>
-        <button
-          aria-label={t("system")}
-          aria-pressed={preference.preference === "system"}
-          className="theme-control__button"
-          onClick={() => updateTheme("system")}
-          type="button"
-        >
-          <Laptop aria-hidden="true" size={16} />
-        </button>
-      </fieldset>
-    );
+      {options.map(({ value, label, Icon }) => {
+        const active = preference.preference === value;
+        return (
+          <button
+            key={value}
+            aria-label={label}
+            aria-pressed={active}
+            className="theme-control__button"
+            onClick={() => updateTheme(value)}
+            type="button"
+          >
+            {active ? (
+              <motion.span
+                aria-hidden="true"
+                className="theme-control__indicator"
+                layoutId={`theme-indicator-${indicatorId}`}
+                transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 520, damping: 38, mass: 0.7 }}
+              />
+            ) : null}
+            <Icon aria-hidden="true" size={16} className="theme-control__icon" />
+          </button>
+        );
+      })}
+    </fieldset>
+  );
 }

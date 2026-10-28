@@ -27,7 +27,9 @@ async function request(path: string, init: RequestInit = {}): Promise<Response> 
   return response;
 }
 
-async function csrfToken(): Promise<string> {
+/** Session-bound CSRF token. Shared with the platform write helpers, which post
+ *  metadata mutations through the same origin and cookie. */
+export async function csrfToken(): Promise<string> {
   const response = await request("/auth/csrf");
   let body: Partial<CsrfResponse>;
   try {
