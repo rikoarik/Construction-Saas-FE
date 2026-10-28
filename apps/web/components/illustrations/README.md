@@ -1,9 +1,0 @@
-# Icons, illustrations, and empty states
-
-- Use Lucide React for functional interface icons. Keep a consistent 16 px table/toolbar or 18–20 px navigation size and stroke; icon-only controls need a translated accessible name and keyboard access. Never substitute emoji for an unavailable icon.
-- Use original, hand-edited SVGs only for first-use or significant contextual empty states. Prefer no illustration for filtered results, approval queues, and dense data surfaces.
-- Keep canonical SVG source under `public/illustrations/` when it must also be available as a file. Use a `0 0 240 144` viewBox, restrained technical line work, 1.5–2 px strokes, and `currentColor` or semantic tokens; no gradients, raster embeds, scripts, external references, animation, or decorative backplates.
-- An external SVG rendered through `<img>` does not inherit application CSS variables. For theme-aware illustrations, render an equivalent owned React SVG component with `currentColor` (as `ProjectEmptyIllustration` does), or provide and select explicit theme variants. Public SVGs are source/standalone assets, not an assumption of inherited theme styling.
-- Decorative SVGs use `aria-hidden="true"` and `focusable="false"`; informative artwork must instead expose a translated accessible name and description. Give decorative images empty alt text.
-- Compose empty states with `EmptyState`: translated title, at most one concise description, optional contextual illustration, and an optional caller-supplied action. Omit the action when the user cannot resolve the state. The component deliberately does not own translation keys, routes, permissions, or business state.
-- Keep illustrations around 160–220 px wide on desktop and 120–176 px on mobile. Use semantic CSS tokens for layout and color; do not add component-local palette values.
